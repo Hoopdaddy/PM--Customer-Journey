@@ -4,13 +4,14 @@ A browser-only checkout and customer journey funnel analyzer for Product Manager
 
 ## What It Does
 
-- Uploads CSV exports locally in the browser.
+- Uploads CSV and supported PDF exports locally in the browser.
 - Supports Adobe Analytics Step Conversion exports.
 - Supports Adobe Analytics Fallout Funnel exports.
+- Supports Augmeta weekly cart and checkout narrative PDFs.
 - Supports simple `Funnel Step,Users` or `Funnel Step,Sessions` CSVs.
 - Detects largest dropoff and funnel health.
 - Compares Adobe segment/date-range views against sensible baselines.
-- Produces a weekly-meeting variation readout.
+- Produces a weekly-meeting variation readout with executive context, watch items, and open hypotheses.
 - Generates a copyable executive summary.
 
 ## Running Locally

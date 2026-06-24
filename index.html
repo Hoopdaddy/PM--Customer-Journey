@@ -3,64 +3,2867 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PM Customer Journey Analyzer</title>
+  <title>Checkout Funnel Analyzer</title>
   <style>
-    :root{--bg:#f6f7f2;--card:#fff;--ink:#17211e;--muted:#65716d;--line:#d8dfdc;--teal:#0f6b63;--blue:#2459a6;--green:#1f7a45;--red:#b42318;--amber:#9a5d00;--soft:#eef3f1;--radius:8px;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}html,body{margin:0;min-height:100%;overflow-x:hidden;background:var(--bg);color:var(--ink)}button,input,select,textarea{font:inherit}button{border:0;cursor:pointer}.shell{width:100%;max-width:1180px;margin:0 auto;padding:24px 16px 48px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}.brand{display:flex;align-items:center;gap:12px;min-width:0}.mark{display:grid;place-items:center;width:42px;height:42px;border-radius:8px;background:var(--teal);color:white;font-weight:900}.brand h1{margin:0;font-size:1.55rem;line-height:1.1}.brand p{margin:3px 0 0;color:var(--muted);font-size:.88rem}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 13px;border-radius:8px;border:1px solid var(--line);background:white;color:var(--ink);font-weight:700}.btn.primary{background:var(--teal);border-color:var(--teal);color:white}.grid{display:grid;grid-template-columns:minmax(300px,.8fr) minmax(0,1.2fr);gap:18px}.panel,.section{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 18px 50px rgba(28,42,38,.08)}.upload{padding:22px;display:grid;gap:16px;align-content:start}.title h2,.title h3{margin:0;font-size:1rem}.title p{margin:5px 0 0;color:var(--muted);font-size:.86rem;line-height:1.45}.drop{position:relative;display:grid;place-items:center;min-height:230px;padding:24px;border:1.5px dashed #a9b6b1;border-radius:8px;background:linear-gradient(135deg,#d9efea,#e2ebfa);text-align:center}.drop input{position:absolute;inset:0;opacity:0;cursor:pointer}.drop strong{display:block;margin-top:10px}.drop span{color:var(--muted);font-size:.88rem}.file-meta,.notice{padding:12px 13px;border-radius:8px;background:var(--soft);color:var(--muted);font-size:.88rem}.error{display:none;padding:11px 12px;border-radius:8px;background:#ffe2df;color:#7a1a12;font-size:.88rem}.error.show{display:block}.results{display:grid;gap:18px;padding:20px;min-width:0}.source{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:12px 14px;border:1px solid var(--line);border-radius:8px}.source-copy{flex:1 1 220px;min-width:0}.source-copy strong{display:block}.source-copy span{display:block;margin-top:3px;color:var(--muted);font-size:.82rem}.controls{display:flex;gap:10px;flex:1 1 420px;min-width:0;flex-wrap:wrap}.control{display:flex;align-items:center;gap:8px;flex:1 1 220px;min-width:0;color:var(--muted);font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.control select{width:100%;min-width:0;min-height:38px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);padding:0 10px;text-transform:none;letter-spacing:0;font-weight:700}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.card{min-width:0;min-height:110px;border:1px solid var(--line);border-radius:8px;padding:14px;background:white;display:grid;align-content:space-between;gap:10px}.label{color:var(--muted);font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.value{font-size:1.55rem;line-height:1.05;font-weight:900;overflow-wrap:anywhere}.note{color:var(--muted);font-size:.82rem;line-height:1.35}.two{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr);gap:18px}.section{padding:16px}.funnel{display:grid;gap:10px;margin-top:16px}.step{display:grid;grid-template-columns:120px minmax(120px,1fr) 88px;gap:12px;align-items:center}.step strong{display:block;overflow-wrap:anywhere}.step small{color:var(--muted)}.bar{position:relative;height:34px;border-radius:7px;background:#edf1ef;overflow:hidden}.fill{position:absolute;inset:0 auto 0 0;min-width:4px;border-radius:7px;background:linear-gradient(90deg,var(--teal),#2f78b8)}.bar b{position:absolute;right:9px;top:7px;font-size:.8rem}.conv{text-align:right;font-weight:900}.conv small{display:block;color:var(--muted);font-weight:600}.drop-row{display:grid;grid-template-columns:120px minmax(120px,1fr) 88px;gap:12px;align-items:center;color:var(--red);font-size:.84rem}.drop-line{height:1px;background:linear-gradient(90deg,rgba(180,35,24,.35),rgba(180,35,24,.04))}.list{display:grid;gap:10px;margin:16px 0 0;padding:0;list-style:none}.list li{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:12px;border:1px solid var(--line);border-radius:8px;background:#f8faf8;line-height:1.42}.num{display:grid;place-items:center;width:28px;height:28px;border-radius:7px;background:#e2ebfa;color:var(--blue);font-weight:900}.recs{display:grid;gap:10px;margin-top:16px}.rec{padding:11px 12px;border-radius:8px;background:#fff0d6;border:1px solid #f2cc86;color:#653b02;line-height:1.38}.variance[hidden],.brief[hidden]{display:none}.variance-grid,.brief-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:16px}.delta-pos{color:var(--green)}.delta-neg{color:var(--red)}.delta-flat{color:var(--muted)}.table-wrap{max-width:100%;overflow-x:auto;border:1px solid var(--line);border-radius:8px;margin-top:14px}.table{width:100%;min-width:610px;border-collapse:collapse;background:white;font-size:.86rem}.table th,.table td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}.table th:first-child,.table td:first-child{text-align:left}.table th{background:#f8faf8;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}.summary{width:100%;min-height:300px;resize:vertical;border:1px solid var(--line);border-radius:8px;padding:13px;line-height:1.48;background:#fbfcfb}.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,16px);opacity:0;pointer-events:none;padding:11px 14px;border-radius:8px;background:var(--ink);color:white;box-shadow:0 16px 40px rgba(0,0,0,.2);transition:.18s}.toast.show{opacity:1;transform:translate(-50%,0)}@media(max-width:940px){.grid,.two{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:640px){.shell{padding:14px 10px 40px}.topbar{align-items:flex-start;flex-direction:column}.actions{width:100%}.btn{flex:1}.results,.upload{padding:14px}.cards,.variance-grid,.brief-grid{grid-template-columns:1fr}.source,.controls,.control{align-items:stretch;flex-direction:column}.step,.drop-row{grid-template-columns:1fr}.conv{text-align:left}.drop-line{display:none}}
+    :root {
+      --bg: #f6f7f2;
+      --surface: #ffffff;
+      --surface-2: #eef3f1;
+      --ink: #17211e;
+      --muted: #64716d;
+      --line: #d9dfdc;
+      --teal: #0f6b63;
+      --teal-2: #d9efea;
+      --blue: #2459a6;
+      --blue-2: #e2ebfa;
+      --amber: #a86605;
+      --amber-2: #fff0d6;
+      --red: #b42318;
+      --red-2: #ffe2df;
+      --green: #1f7a45;
+      --green-2: #dff4e8;
+      --shadow: 0 18px 50px rgba(28, 42, 38, 0.1);
+      --radius: 8px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.65), rgba(246, 247, 242, 0.98)),
+        var(--bg);
+      color: var(--ink);
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 0 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: var(--teal);
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(15, 107, 99, 0.24);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1.25rem, 3vw, 1.65rem);
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .icon-btn,
+    .primary-btn,
+    .secondary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 40px;
+      border-radius: 8px;
+      padding: 0 13px;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line);
+      transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+      white-space: nowrap;
+    }
+
+    .icon-btn {
+      width: 40px;
+      padding: 0;
+    }
+
+    .primary-btn {
+      background: var(--teal);
+      color: #fff;
+      border-color: var(--teal);
+    }
+
+    .secondary-btn:hover,
+    .icon-btn:hover,
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--teal);
+    }
+
+    .primary-btn:hover {
+      background: #0b5c55;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.86fr) minmax(360px, 1.14fr);
+      gap: 18px;
+      align-items: stretch;
+      min-height: 480px;
+    }
+
+    .panel {
+      min-width: 0;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .upload-panel {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .section-title h2,
+    .section-title h3 {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .section-title p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+
+    .upload-zone {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 245px;
+      padding: 26px;
+      border: 1.5px dashed #a9b6b1;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(217, 239, 234, 0.8), rgba(226, 235, 250, 0.7)),
+        #fff;
+      text-align: center;
+      transition: border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .upload-zone.is-dragging {
+      border-color: var(--teal);
+      background: var(--teal-2);
+    }
+
+    .upload-zone input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .upload-content {
+      display: grid;
+      justify-items: center;
+      gap: 14px;
+      pointer-events: none;
+    }
+
+    .upload-icon {
+      display: grid;
+      place-items: center;
+      width: 62px;
+      height: 62px;
+      border-radius: 8px;
+      color: var(--teal);
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 30px rgba(23, 33, 30, 0.1);
+    }
+
+    .upload-content strong {
+      font-size: 1.05rem;
+    }
+
+    .upload-content span {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+
+    .file-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 13px;
+      min-height: 48px;
+      border-radius: var(--radius);
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .validation {
+      display: none;
+      border-radius: var(--radius);
+      border: 1px solid var(--red-2);
+      background: var(--red-2);
+      color: #7a1a12;
+      padding: 11px 12px;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .validation.is-visible {
+      display: block;
+    }
+
+    .processing {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 11px 12px;
+      border-radius: var(--radius);
+      background: var(--blue-2);
+      color: #173b72;
+      font-size: 0.9rem;
+    }
+
+    .processing.is-visible {
+      display: flex;
+    }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(36, 89, 166, 0.2);
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .preview-panel {
+      min-width: 0;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      overflow: hidden;
+    }
+
+    .preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.86);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 30px;
+      padding: 0 10px;
+      border-radius: 999px;
+      color: var(--teal);
+      background: var(--teal-2);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .empty-state,
+    .results {
+      min-height: 410px;
+    }
+
+    .empty-state {
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .empty-visual {
+      width: min(430px, 100%);
+      min-height: 250px;
+      display: grid;
+      gap: 12px;
+      align-content: center;
+    }
+
+    .skeleton-step {
+      display: grid;
+      grid-template-columns: 92px 1fr 64px;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .skeleton-step span {
+      height: 12px;
+      border-radius: 999px;
+      background: #dfe7e4;
+    }
+
+    .skeleton-step .bar {
+      height: 28px;
+      border-radius: 7px;
+      background: linear-gradient(90deg, #d9efea, #e2ebfa);
+    }
+
+    .results {
+      display: none;
+      padding: 20px;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .results.is-visible {
+      display: grid;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+    }
+
+    .source-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      min-width: 0;
+      min-height: 58px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .source-strip[hidden] {
+      display: none;
+    }
+
+    .source-copy {
+      flex: 1 1 220px;
+      min-width: 0;
+    }
+
+    .source-copy strong {
+      display: block;
+      font-size: 0.9rem;
+      line-height: 1.25;
+    }
+
+    .source-copy span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+
+    .segment-menu {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1 1 220px;
+      min-width: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .segment-menu[hidden] {
+      display: none;
+    }
+
+    .segment-menu select {
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 0 10px;
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 650;
+    }
+
+    .source-controls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+      flex: 1 1 420px;
+      min-width: 0;
+    }
+
+    .variance-section[hidden],
+    .meeting-panel[hidden] {
+      display: none;
+    }
+
+    .variance-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .variance-card {
+      min-width: 0;
+      min-height: 96px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #f8faf8;
+      padding: 12px;
+      display: grid;
+      align-content: space-between;
+      gap: 10px;
+    }
+
+    .variance-card strong {
+      font-size: 1.1rem;
+      line-height: 1.1;
+      overflow-wrap: anywhere;
+    }
+
+    .variance-card span {
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+
+    .variance-table-wrap {
+      margin-top: 14px;
+      max-width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .variance-table {
+      width: 100%;
+      min-width: 610px;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: 0.86rem;
+    }
+
+    .variance-table th,
+    .variance-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .variance-table th:first-child,
+    .variance-table td:first-child {
+      text-align: left;
+    }
+
+    .variance-table th {
+      color: var(--muted);
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: #f8faf8;
+    }
+
+    .variance-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .delta-positive {
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .delta-negative {
+      color: var(--red);
+      font-weight: 800;
+    }
+
+    .delta-neutral {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .brief-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .brief-card {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcfb;
+      padding: 13px;
+      line-height: 1.45;
+    }
+
+    .brief-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .metric {
+      min-width: 0;
+      min-height: 112px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      align-content: space-between;
+      gap: 12px;
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .metric-value {
+      font-size: 1.55rem;
+      font-weight: 800;
+      line-height: 1.05;
+      overflow-wrap: anywhere;
+    }
+
+    .metric-note {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.06fr) minmax(320px, 0.94fr);
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .analysis-section {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 16px;
+    }
+
+    .funnel-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .funnel-row {
+      display: grid;
+      grid-template-columns: 112px minmax(140px, 1fr) 84px;
+      gap: 12px;
+      align-items: center;
+      min-height: 58px;
+    }
+
+    .step-name {
+      min-width: 0;
+    }
+
+    .step-name strong {
+      display: block;
+      overflow-wrap: anywhere;
+      line-height: 1.2;
+    }
+
+    .step-name span {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .bar-track {
+      position: relative;
+      height: 34px;
+      border-radius: 7px;
+      background: #edf1ef;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      min-width: 4px;
+      border-radius: 7px;
+      background: linear-gradient(90deg, var(--teal), #2f78b8);
+    }
+
+    .bar-value {
+      position: absolute;
+      inset: 0 10px 0 auto;
+      display: flex;
+      align-items: center;
+      color: var(--ink);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .step-conversion {
+      text-align: right;
+      font-weight: 800;
+    }
+
+    .step-conversion span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .drop-row {
+      display: grid;
+      grid-template-columns: 112px minmax(140px, 1fr) 84px;
+      gap: 12px;
+      align-items: center;
+      min-height: 30px;
+      color: var(--red);
+      font-size: 0.84rem;
+    }
+
+    .drop-line {
+      height: 1px;
+      background: linear-gradient(90deg, rgba(180, 35, 24, 0.35), rgba(180, 35, 24, 0.04));
+    }
+
+    .insights-list {
+      display: grid;
+      gap: 10px;
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .insights-list li {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      padding: 12px;
+      border-radius: var(--radius);
+      background: #f8faf8;
+      border: 1px solid var(--line);
+      line-height: 1.42;
+    }
+
+    .insight-index {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: var(--blue-2);
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 0.78rem;
+    }
+
+    .summary-panel {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .summary-text {
+      width: 100%;
+      min-height: 304px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 13px;
+      color: var(--ink);
+      line-height: 1.48;
+      background: #fbfcfb;
+    }
+
+    .summary-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .recommendations {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .recommendation {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 11px 12px;
+      border-radius: var(--radius);
+      background: var(--amber-2);
+      border: 1px solid #f2cc86;
+      color: #653b02;
+      line-height: 1.38;
+    }
+
+    .recommendation svg {
+      flex: 0 0 auto;
+      margin-top: 1px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translate(-50%, 16px);
+      opacity: 0;
+      pointer-events: none;
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 14px;
+      border-radius: 8px;
+      background: var(--ink);
+      color: #fff;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      z-index: 5;
+      font-size: 0.9rem;
+    }
+
+    .toast.is-visible {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    svg {
+      display: block;
+    }
+
+    @media (max-width: 940px) {
+      .hero-grid,
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metrics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .variance-grid,
+      .brief-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .app-shell {
+        width: min(100vw - 20px, 1180px);
+        padding-top: 12px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .toolbar {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .toolbar .secondary-btn,
+      .toolbar .primary-btn {
+        flex: 1 1 auto;
+      }
+
+      .upload-panel,
+      .results,
+      .preview-header {
+        padding: 14px;
+      }
+
+      .upload-zone {
+        min-height: 210px;
+      }
+
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .source-strip,
+      .source-controls {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .segment-menu {
+        align-items: stretch;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .segment-menu select {
+        width: 100%;
+      }
+
+      .variance-grid,
+      .brief-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .funnel-row,
+      .drop-row {
+        grid-template-columns: 1fr;
+      }
+
+      .drop-row {
+        padding: 4px 0 8px;
+      }
+
+      .drop-line {
+        display: none;
+      }
+
+      .step-conversion {
+        text-align: left;
+      }
+    }
   </style>
 </head>
 <body>
-  <main class="shell">
+  <main class="app-shell">
     <header class="topbar">
-      <div class="brand"><div class="mark">F</div><div><h1>PM Customer Journey Analyzer</h1><p>Adobe Analytics funnel insight cockpit</p></div></div>
-      <div class="actions"><button class="btn" id="sampleBtn">Sample CSV</button><button class="btn" id="resetBtn" disabled>Reset</button></div>
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M4 5h16l-6.3 7.2v4.7l-3.4 2.1v-6.8L4 5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h1>Checkout Funnel Analyzer</h1>
+          <p>V0 proof of concept</p>
+        </div>
+      </div>
+      <div class="toolbar" aria-label="Global actions">
+        <button class="secondary-btn" id="loadSample" type="button">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 4h16v16H4V4Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 9h8M8 13h8M8 17h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          Sample CSV
+        </button>
+        <button class="secondary-btn" id="resetApp" type="button" disabled>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M20 12a8 8 0 1 1-2.34-5.66" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M20 4v6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Reset
+        </button>
+      </div>
     </header>
-    <section class="grid">
-      <aside class="panel upload">
-        <div class="title"><h2>Upload Funnel CSV</h2><p>Supports Adobe Step Conversion, Adobe Fallout Funnel, or simple funnel count files.</p></div>
-        <label class="drop"><input id="fileInput" type="file" accept=".csv,text/csv"><div><strong>Choose or drop a CSV</strong><span>Adobe segments and date ranges are detected automatically.</span></div></label>
-        <div class="file-meta" id="fileMeta">No file selected</div>
-        <div class="error" id="error"></div>
-      </aside>
-      <section class="panel results">
-        <div class="source" id="source" hidden><div class="source-copy"><strong id="format">Detected format</strong><span id="sourceNote"></span></div><div class="controls"><label class="control" id="viewWrap">View<select id="viewSelect"></select></label><label class="control" id="compareWrap">Compare<select id="compareSelect"></select></label></div></div>
-        <div class="cards" id="metrics"></div>
-        <section class="section variance" id="variance" hidden><div class="title"><h3>Variation Analysis</h3><p id="varianceNote"></p></div><div class="variance-grid" id="varianceCards"></div><div class="table-wrap" id="varianceTable"></div></section>
-        <div class="two"><section class="section"><div class="title"><h3>Funnel Visualization</h3><p id="funnelNote"></p></div><div class="funnel" id="funnel"></div></section><section class="section"><div class="title"><h3>Insights</h3><p id="health"></p></div><ul class="list" id="insights"></ul><div class="recs" id="recs"></div></section></div>
-        <section class="section brief" id="brief" hidden><div class="title"><h3>Weekly Meeting Brief</h3><p id="briefNote"></p></div><div class="brief-grid" id="briefCards"></div></section>
-        <section class="section"><div class="title"><h3>Executive Summary</h3><p>Copy-ready readout.</p></div><textarea class="summary" id="summary"></textarea><div class="actions"><button class="btn primary" id="copyBtn">Copy Summary</button><button class="btn" id="printBtn">Print / Save PDF</button></div></section>
-      </section>
+
+    <section class="hero-grid" aria-label="Checkout funnel analyzer workflow">
+      <div class="panel upload-panel">
+        <div class="section-title">
+          <div>
+            <h2>Upload Funnel Data</h2>
+            <p>Supports Adobe CSV exports, simple funnel files, and Augmeta weekly narrative PDFs.</p>
+          </div>
+        </div>
+
+        <label class="upload-zone" id="uploadZone">
+          <input id="csvInput" type="file" accept=".csv,.pdf,text/csv,application/pdf">
+          <span class="upload-content">
+            <span class="upload-icon" aria-hidden="true">
+              <svg width="31" height="31" viewBox="0 0 24 24" fill="none">
+                <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="m7 8 5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <strong>Choose or drop a CSV or PDF</strong>
+            <span>Adobe and Augmeta formats are detected automatically.</span>
+          </span>
+        </label>
+
+        <div class="file-meta" id="fileMeta">
+          <span>No file selected</span>
+          <span>.csv / .pdf</span>
+        </div>
+
+        <div class="validation" id="validation" role="alert"></div>
+
+        <div class="processing" id="processing" aria-live="polite">
+          <span class="spinner" aria-hidden="true"></span>
+          <strong>Processing Funnel...</strong>
+        </div>
+      </div>
+
+      <div class="panel preview-panel">
+        <div class="preview-header">
+          <div class="section-title">
+            <div>
+              <h2>Results</h2>
+              <p>Visualization, metrics, insights, and leadership summary.</p>
+            </div>
+          </div>
+          <span class="status-pill" id="statusPill"><span class="status-dot"></span>Ready</span>
+        </div>
+
+        <div class="empty-state" id="emptyState">
+          <div class="empty-visual" aria-hidden="true">
+            <div class="skeleton-step"><span></span><span class="bar" style="width: 100%"></span><span></span></div>
+            <div class="skeleton-step"><span></span><span class="bar" style="width: 82%"></span><span></span></div>
+            <div class="skeleton-step"><span></span><span class="bar" style="width: 62%"></span><span></span></div>
+            <div class="skeleton-step"><span></span><span class="bar" style="width: 58%"></span><span></span></div>
+            <div class="skeleton-step"><span></span><span class="bar" style="width: 55%"></span><span></span></div>
+          </div>
+        </div>
+
+        <div class="results" id="results" aria-live="polite">
+          <div class="source-strip" id="sourceStrip" hidden>
+            <div class="source-copy">
+              <strong id="sourceFormat">Detected format</strong>
+              <span id="sourceNote"></span>
+            </div>
+            <div class="source-controls">
+              <label class="segment-menu" id="segmentMenu" hidden>
+                <span>View</span>
+                <select id="segmentSelect" aria-label="Select segment"></select>
+              </label>
+              <label class="segment-menu" id="comparisonMenu" hidden>
+                <span>Compare</span>
+                <select id="comparisonSelect" aria-label="Select comparison baseline"></select>
+              </label>
+            </div>
+          </div>
+          <div class="metrics-grid" id="metricsGrid"></div>
+          <section class="analysis-section variance-section" id="varianceSection" aria-labelledby="varianceHeading" hidden>
+            <div class="section-title">
+              <div>
+                <h3 id="varianceHeading">Variation Analysis</h3>
+                <p id="varianceSubtitle"></p>
+              </div>
+            </div>
+            <div class="variance-grid" id="varianceGrid"></div>
+            <div class="variance-table-wrap" id="varianceTableWrap"></div>
+          </section>
+          <div class="content-grid">
+            <section class="analysis-section" aria-labelledby="funnelHeading">
+              <div class="section-title">
+                <div>
+                  <h3 id="funnelHeading">Funnel Visualization</h3>
+                  <p id="funnelSubtitle"></p>
+                </div>
+              </div>
+              <div class="funnel-list" id="funnelList"></div>
+            </section>
+
+            <section class="analysis-section" aria-labelledby="insightHeading">
+              <div class="section-title">
+                <div>
+                  <h3 id="insightHeading">AI Insights</h3>
+                  <p id="healthLabel"></p>
+                </div>
+              </div>
+              <ul class="insights-list" id="insightsList"></ul>
+              <div class="recommendations" id="recommendations"></div>
+            </section>
+          </div>
+
+          <section class="summary-panel meeting-panel" id="meetingPanel" aria-labelledby="meetingHeading" hidden>
+            <div class="section-title">
+              <div>
+                <h3 id="meetingHeading">Weekly Meeting Brief</h3>
+                <p id="meetingSubtitle"></p>
+              </div>
+            </div>
+            <div class="brief-grid" id="meetingBrief"></div>
+          </section>
+
+          <section class="summary-panel" aria-labelledby="summaryHeading">
+            <div class="section-title">
+              <div>
+                <h3 id="summaryHeading">Executive Summary</h3>
+                <p>Presentation-ready narrative.</p>
+              </div>
+            </div>
+            <textarea class="summary-text" id="summaryText" aria-label="Executive summary"></textarea>
+            <div class="summary-actions">
+              <button class="primary-btn" type="button" id="copySummary">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="2"/>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Copy Summary
+              </button>
+              <button class="secondary-btn" type="button" id="downloadPdf">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="m7 10 5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Download PDF
+              </button>
+            </div>
+          </section>
+        </div>
+      </div>
     </section>
   </main>
-  <div class="toast" id="toast"></div>
-<script>
-const $=s=>document.querySelector(s);const els={file:$('#fileInput'),meta:$('#fileMeta'),error:$('#error'),source:$('#source'),format:$('#format'),sourceNote:$('#sourceNote'),viewWrap:$('#viewWrap'),view:$('#viewSelect'),compareWrap:$('#compareWrap'),compare:$('#compareSelect'),metrics:$('#metrics'),variance:$('#variance'),varianceNote:$('#varianceNote'),varianceCards:$('#varianceCards'),varianceTable:$('#varianceTable'),funnel:$('#funnel'),funnelNote:$('#funnelNote'),health:$('#health'),insights:$('#insights'),recs:$('#recs'),brief:$('#brief'),briefNote:$('#briefNote'),briefCards:$('#briefCards'),summary:$('#summary'),toast:$('#toast'),reset:$('#resetBtn')};
-const sampleCsv='Funnel Step,Users\nCart,100000\nShipping,82000\nPayment,62000\nReview,58000\nPurchase,55000';let activeReport=null,activeAnalysis=null,timer=null;
-$('#sampleBtn').onclick=()=>processCsv(sampleCsv,'Sample checkout funnel');els.reset.onclick=reset;els.copyBtn.onclick=copySummary;els.printBtn.onclick=()=>window.print();els.file.onchange=e=>{const f=e.target.files[0];if(f)readFile(f)};els.view.onchange=()=>{activeReport.selectedIndex=Number(els.view.value);activeReport.comparisonIndex=defaultCompare(activeReport,activeReport.selectedIndex);renderControls(activeReport);renderAnalysis(activeReport.analyses[activeReport.selectedIndex]);toast('View updated')};els.compare.onchange=()=>{activeReport.comparisonIndex=els.compare.value===''?-1:Number(els.compare.value);renderAnalysis(activeReport.analyses[activeReport.selectedIndex]);toast('Comparison updated')};
-function readFile(file){if(!file.name.toLowerCase().endsWith('.csv'))return showError('Upload a CSV file.');els.meta.textContent=`${file.name} (${bytes(file.size)})`;const r=new FileReader();r.onload=()=>processCsv(String(r.result||''),file.name);r.onerror=()=>showError('The file could not be read.');r.readAsText(file)}
-function processCsv(text,name){try{hideError();const report=normalize(parseCsv(text),name);renderReport(report);toast('Analysis complete')}catch(e){showError(e.message||'The CSV could not be processed.')}}
-function parseCsv(text){const rows=[];let row=[],v='',q=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(c==='"'){if(q&&n==='"'){v+='"';i++}else q=!q}else if(c===','&&!q){row.push(v);v=''}else if((c==='\n'||c==='\r')&&!q){if(c==='\r'&&n==='\n')i++;row.push(v);if(row.some(x=>x.trim()))rows.push(row);row=[];v=''}else v+=c}row.push(v);if(row.some(x=>x.trim()))rows.push(row);if(rows.length<2)throw Error('The CSV needs a header and data rows.');return rows}
-function normalize(rows,name){return stepConversion(rows,name)||fallout(rows,name)||simple(rows,name)}
-function useful(rows){return rows.map(r=>r.map(c=>String(c||'').trim())).filter(r=>r.some(Boolean)).filter(r=>!String(r[0]||'').startsWith('#'))}
-function stepConversion(rows,name){const u=useful(rows);const hi=u.findIndex((r,i)=>r[0]===''&&r.slice(1).some(Boolean)&&u.slice(i+1,i+7).some(n=>clean(n[0]).startsWith('% ')));if(hi<0)return null;const header=u[hi],data=u.slice(hi+1),steps=data.filter(r=>clean(r[0]).startsWith('% ')),overall=data.find(r=>clean(r[0])==='conversion rate');const analyses=header.map((seg,i)=>({seg,i})).filter(x=>x.i>0&&x.seg).map(({seg,i})=>{const items=stepsFromRates(steps,i);if(!items)return null;return analyze(items,{sourceName:name,segmentName:seg,segmentGroup:seg,formatLabel:'Adobe Analytics Step Conversion',unitLabel:'modeled starts',inputType:'rates',isIndexed:true,baselineCount:100000,officialOverallRate:overall?rate(overall[i]):null,sourceNote:'Adobe exports rates only, so counts are indexed from 100,000 starts.'})}).filter(Boolean);return analyses.length?{sourceName:name,formatLabel:'Adobe Analytics Step Conversion',note:'Rates converted into indexed funnels from 100,000 starts.',analyses,selectedIndex:0}:null}
-function stepsFromRates(rows,col){const trans=rows.map(r=>{const p=transition(r[0]),x=rate(r[col]);return p&&Number.isFinite(x)?{...p,rate:x}:null}).filter(Boolean);if(!trans.length)return null;let c=100000;const items=[{step:trans[0].from,count:c}];trans.forEach(t=>{c*=t.rate;items.push({step:t.to,count:c})});return items}
-function fallout(rows,name){const u=useful(rows);const si=u.findIndex(r=>clean(r[0])==='segments'&&r.slice(1).some(c=>Number.isFinite(count(c))));if(si<3)return null;const segH=u[si-3]||[],metH=u[si-2]||[],perH=u[si-1]||[],data=u.slice(si).filter(r=>r[0]&&r.slice(1).some(c=>Number.isFinite(count(c))));const max=Math.max(segH.length,metH.length,perH.length,...data.map(r=>r.length));const analyses=[];for(let col=1;col<max;col++){if(!Number.isFinite(count(data[0][col]))||count(data[0][col])<=0)continue;const items=data.map(r=>Number.isFinite(count(r[col]))?{step:falloutLabel(r[0]),count:count(r[col])}:null).filter(Boolean);if(items.length<2)continue;const seg=segH[col]||`Segment ${col}`,metric=metH[col]||'Visits',period=perH[col]||'',view=[seg,period].filter(Boolean).join(' - ');analyses.push(analyze(items,{sourceName:name,segmentName:view,segmentGroup:seg,periodName:period,metricName:metric,formatLabel:'Adobe Analytics Fallout Funnel',unitLabel:metric.toLowerCase(),sourceNote:'Adobe cumulative fallout counts are used directly.'}))}return analyses.length?{sourceName:name,formatLabel:'Adobe Analytics Fallout Funnel',note:'Cumulative fallout counts by segment and date range.',analyses,selectedIndex:0}:null}
-function simple(rows,name){const h=rows[0].map(clean),si=find(h,['funnel step','step','stage','checkout step']),ci=find(h,['users','sessions','visits','user count','session count']);if(si<0||ci<0)throw Error('Use Funnel Step plus Users/Sessions, or upload a supported Adobe export.');const items=rows.slice(1).map((r,i)=>{const step=String(r[si]||'').trim(),c=count(r[ci]);if(!step)throw Error(`Row ${i+2} is missing a step.`);if(!Number.isFinite(c)||c<0)throw Error(`Row ${i+2} has an invalid count.`);return{step,count:c}});if(items.length<2)throw Error('Add at least two funnel steps.');return{sourceName:name,formatLabel:'Simple funnel CSV',note:'Raw step counts from uploaded CSV.',analyses:[analyze(items,{sourceName:name,segmentName:'Uploaded funnel',segmentGroup:'Uploaded funnel',formatLabel:'Simple funnel CSV',unitLabel:'users or sessions'})],selectedIndex:0}}
-function analyze(items,m={}){const first=items[0].count,last=items.at(-1).count;if(first<=0)throw Error('The first funnel step must be greater than zero.');const steps=items.map((it,i)=>{const prev=i?items[i-1].count:null,next=i<items.length-1?items[i+1].count:null;return{name:it.step,count:it.count,conversionFromStart:it.count/first,conversionFromPrevious:prev?it.count/prev:1,dropToNext:next==null?null:Math.max(0,(it.count-next)/it.count),lostToNext:next==null?0:Math.max(0,it.count-next)}});const drops=steps.slice(0,-1).map((s,i)=>({from:s.name,to:steps[i+1].name,priorityStep:steps[i+1].name,rate:s.dropToNext||0,lost:s.lostToNext}));const largest=drops.reduce((b,d)=>!b||d.rate>b.rate||d.rate===b.rate&&d.lost>b.lost?d:b,null);const overall=last/first,health=overall>=.7?'Strong funnel health':overall>=.5?'Moderate funnel health':overall>=.35?'Constrained funnel health':'High-friction funnel health';const recs=recommend(largest,overall);const analysis={...m,steps,dropoffs:drops,largestDrop:largest,overallConversion:overall,health:{label:health},recommendations:recs,unitLabel:m.unitLabel||'users or sessions',baselineCount:m.baselineCount||first,isIndexed:!!m.isIndexed};analysis.insights=insights(analysis);analysis.summary=summary(analysis,null);return analysis}
-function insights(a){const l=a.largestDrop,first=a.steps[0],last=a.steps.at(-1),loss=a.isIndexed?`${fmt(l.lost)} modeled dropoffs per ${fmt(a.baselineCount)} starts`:`${fmt(l.lost)} ${a.unitLabel} lost`;const out=[`${l.priorityStep} is the largest friction point, with ${pct(l.rate)} abandonment from ${l.from} to ${l.to} and ${loss}.`,`Overall conversion is ${pct(a.overallConversion)} from ${first.name} to ${last.name}, which indicates ${a.health.label.toLowerCase()}.`];if(a.isIndexed)out.push(`Adobe provided rates rather than raw counts, so this funnel is indexed to ${fmt(a.baselineCount)} starts.`);return out}
-function recommend(l,overall){const s=l.priorityStep.toLowerCase(),r=[];if(s.includes('payment'))r.push('Review payment form usability, validation errors, tender availability, wallet options, and mobile completion issues.');else if(s.includes('shipping')||s.includes('delivery'))r.push('Inspect shipping speed, cost presentation, address validation, and delivery promise clarity.');else if(s.includes('cart'))r.push('Audit cart totals, promo entry, availability messaging, and the path into checkout.');else if(s.includes('checkout'))r.push('Review checkout entry, sign-in friction, address capture, payment readiness, and page performance by device.');else r.push(`Prioritize qualitative and analytics review around ${l.priorityStep}.`);r.push(overall<.5?'Pair the largest-dropoff review with device, browser, and traffic-source segmentation.':'Segment the largest dropoff by device and new versus returning customer before changing UX.');return r}
-function defaultCompare(report,idx){if(report.analyses.length<2)return-1;const cur=report.analyses[idx],same=report.analyses.map((a,i)=>({a,i})).filter(x=>x.i!==idx&&x.a.segmentGroup===cur.segmentGroup),p=clean(cur.periodName),targets=p.includes('last 7')?['last 30','last 90']:p==='ytd'?['ytd ly']:p.includes('last 30')?['last 90','last 7']:p.includes('ytd ly')?['ytd']:[];for(const t of targets){const m=same.find(x=>clean(x.a.periodName).includes(t));if(m)return m.i}return same[0]?.i??report.analyses.findIndex((_,i)=>i!==idx)}
-function compare(cur,base){const rows=cur.steps.map((s,i)=>{const b=base.steps.find(x=>x.name===s.name)||base.steps[i];return b?{step:s.name,currentRate:s.conversionFromPrevious,baselineRate:b.conversionFromPrevious,delta:s.conversionFromPrevious-b.conversionFromPrevious,currentCount:s.count,baselineCount:b.count,countDelta:s.count-b.count}:null}).filter(Boolean);const movement=rows.slice(1).reduce((b,r)=>!b||Math.abs(r.delta)>Math.abs(b.delta)?r:b,null);const cf=cur.steps[0],bf=base.steps[0],cl=cur.steps.at(-1),bl=base.steps.at(-1);return{current:cur,baseline:base,label:base.segmentName||base.sourceName,periodsDiffer:!!(cur.periodName&&base.periodName&&cur.periodName!==base.periodName),overallDelta:cur.overallConversion-base.overallConversion,entryDelta:cf.count-bf.count,entryRelativeDelta:rel(cf.count,bf.count),completionDelta:cl.count-bl.count,completionRelativeDelta:rel(cl.count,bl.count),largestMovement:movement,stepRows:rows}}
-function renderReport(report){activeReport=report;activeReport.comparisonIndex=defaultCompare(report,report.selectedIndex);renderControls(report);renderAnalysis(report.analyses[report.selectedIndex])}
-function renderControls(r){els.source.hidden=false;els.format.textContent=r.formatLabel;els.sourceNote.textContent=r.note;els.view.innerHTML=r.analyses.map((a,i)=>`<option value="${i}">${esc(a.segmentName||`Funnel ${i+1}`)}</option>`).join('');els.view.value=String(r.selectedIndex);els.viewWrap.hidden=r.analyses.length<2;els.compare.innerHTML='<option value="">No comparison</option>'+r.analyses.map((a,i)=>`<option value="${i}"${i===r.selectedIndex?' disabled':''}>${esc(a.segmentName||`Funnel ${i+1}`)}</option>`).join('');els.compare.value=r.comparisonIndex>=0?String(r.comparisonIndex):'';els.compareWrap.hidden=r.analyses.length<2}
-function renderAnalysis(a){activeAnalysis=a;const c=activeReport&&activeReport.comparisonIndex>=0?compare(a,activeReport.analyses[activeReport.comparisonIndex]):null;els.reset.disabled=false;metrics(a,c);variance(a,c);funnel(a);renderInsights(a,c);brief(a,c);els.summary.value=summary(a,c)}
-function metrics(a,c){const l=a.largestDrop,first=a.steps[0],last=a.steps.at(-1);els.metrics.innerHTML=card('Overall Conversion',pct(a.overallConversion),c?`${dpp(c.overallDelta)} vs compare`:`${first.name} to ${last.name}`)+card('Largest Dropoff',pct(l.rate),`${l.priorityStep} step`)+card(a.isIndexed?'Modeled Dropoff':'Lost at Priority Step',fmt(l.lost),a.isIndexed?`Per ${fmt(a.baselineCount)} starts`:a.unitLabel)+card('Funnel Health',a.health.label.split(' ')[0],a.health.label)}
-function variance(a,c){if(!c){els.variance.hidden=true;return}els.variance.hidden=false;els.varianceNote.textContent=`${a.segmentName||'Current view'} compared with ${c.label}.`;const mv=c.largestMovement;els.varianceCards.innerHTML=card('Overall Conversion',dpp(c.overallDelta),`${pct(a.overallConversion)} vs ${pct(c.baseline.overallConversion)}`,tone(c.overallDelta))+card('Biggest Step Movement',mv?dpp(mv.delta):'0 pp',mv?mv.step:'No comparable step',tone(mv?mv.delta:0))+card('Entry Volume',c.periodsDiffer?fmt(a.steps[0].count):relfmt(c.entryRelativeDelta),c.periodsDiffer?`Current ${a.unitLabel}; baseline ${fmt(c.baseline.steps[0].count)}`:`${snum(c.entryDelta)} ${a.unitLabel}`,c.periodsDiffer?'delta-flat':tone(c.entryRelativeDelta||0))+card('Completion Volume',c.periodsDiffer?fmt(a.steps.at(-1).count):relfmt(c.completionRelativeDelta),c.periodsDiffer?`Current ${a.unitLabel}; baseline ${fmt(c.baseline.steps.at(-1).count)}`:`${snum(c.completionDelta)} ${a.unitLabel}`,c.periodsDiffer?'delta-flat':tone(c.completionRelativeDelta||0));els.varianceTable.innerHTML=`<table class="table"><thead><tr><th>Step</th><th>Current Step Conv.</th><th>Compare Step Conv.</th><th>Delta</th><th>Volume Delta</th></tr></thead><tbody>${c.stepRows.map(r=>`<tr><td>${esc(r.step)}</td><td>${pct(r.currentRate)}</td><td>${pct(r.baselineRate)}</td><td class="${tone(r.delta)}">${dpp(r.delta)}</td><td>${snum(r.countDelta)}</td></tr>`).join('')}</tbody></table>`}
-function funnel(a){const max=Math.max(...a.steps.map(s=>s.count));els.funnelNote.textContent=a.isIndexed?`${a.steps.length} steps; indexed from ${fmt(a.baselineCount)} starts.`:`${a.steps.length} steps from ${a.steps[0].name} to ${a.steps.at(-1).name}.`;let html='';a.steps.forEach((s,i)=>{const ct=a.isIndexed?`${fmt(s.count)} modeled`:fmt(s.count),w=Math.max(5,s.count/max*100);html+=`<div class="step"><div><strong>${esc(s.name)}</strong><small>${esc(ct)}</small></div><div class="bar"><div class="fill" style="width:${w}%"></div><b>${esc(ct)}</b></div><div class="conv">${pct(s.conversionFromStart)}<small>from start</small></div></div>`;if(i<a.steps.length-1)html+=`<div class="drop-row"><span></span><span class="drop-line"></span><strong>${pct(a.dropoffs[i].rate)} drop</strong></div>`});els.funnel.innerHTML=html}
-function renderInsights(a,c){els.health.textContent=a.health.label;const list=a.insights.slice();if(c)list.unshift(`Compared with ${c.label}, overall conversion changed ${dpp(c.overallDelta)} and ${c.largestMovement?c.largestMovement.step:a.largestDrop.priorityStep} is the biggest movement to explain.`);els.insights.innerHTML=list.map((x,i)=>`<li><span class="num">${i+1}</span><span>${esc(x)}</span></li>`).join('');els.recs.innerHTML=a.recommendations.map(x=>`<div class="rec">${esc(x)}</div>`).join('')}
-function brief(a,c){els.brief.hidden=false;const b=meeting(a,c);els.briefNote.textContent=c?`${a.segmentName} vs ${c.label}`:a.segmentName||'Current funnel';els.briefCards.innerHTML=b.map(x=>`<div class="card"><div class="label">${esc(x.title)}</div><div>${esc(x.body)}</div></div>`).join('')}
-function meeting(a,c){if(!c)return[{title:'Headline',body:`${a.segmentName||'Current funnel'} converts at ${pct(a.overallConversion)}, with ${a.largestDrop.priorityStep} as the largest dropoff.`},{title:'Explain',body:'Use the largest-dropoff step and step conversion table to focus the conversation.'},{title:'Ask',body:a.recommendations[0]}];const mv=c.largestMovement,dir=c.overallDelta>0?'up':c.overallDelta<0?'down':'flat';return[{title:'Headline',body:`${a.segmentName||'Current funnel'} is ${dir} ${dpp(c.overallDelta)} in overall conversion versus ${c.label}.`},{title:'Explain',body:mv?`${mv.step} changed ${dpp(mv.delta)} in step conversion and is the biggest movement to call out.`:'Step movement is limited; frame the readout around overall conversion and volume.'},{title:'Ask',body:a.recommendations[0]}]}
-function summary(a,c){if(!c){const first=a.steps[0],last=a.steps.at(-1);return[`Checkout Funnel Analyzer Executive Summary`,``,`Source: ${a.sourceName}`,`Format: ${a.formatLabel}`,a.segmentName?`Current view: ${a.segmentName}`:'',``,`Overview`,`${first.name} to ${last.name} conversion is ${pct(a.overallConversion)}. ${a.largestDrop.priorityStep} is the largest friction point.`,``,`Recommendations`,...a.recommendations.map((r,i)=>`${i+1}. ${r}`)].filter(Boolean).join('\n')}const mv=c.largestMovement,last=a.steps.at(-1);const findings=[`1. Overall conversion is ${pct(a.overallConversion)} versus ${pct(c.baseline.overallConversion)} for ${c.label}, a ${dpp(c.overallDelta)} change.`,`2. ${a.largestDrop.priorityStep} remains the largest current friction point, with ${pct(a.largestDrop.rate)} abandonment between ${a.largestDrop.from} and ${a.largestDrop.to}.`];if(mv)findings.push(`3. The biggest step-level movement is ${mv.step}, changing ${dpp(mv.delta)} versus the comparison baseline.`);findings.push(c.periodsDiffer?`${mv?'4':'3'}. Current completion volume is ${fmt(last.count)} ${a.unitLabel}; because the comparison window is ${c.baseline.periodName}, treat conversion-rate deltas as the primary performance signal.`:`${mv?'4':'3'}. Completion volume is ${relfmt(c.completionRelativeDelta)} versus baseline (${snum(c.completionDelta)} ${a.unitLabel}).`);return[`Checkout Funnel Analyzer Executive Summary`,`Source: ${a.sourceName}`,`Format: ${a.formatLabel}`,a.segmentName?`Current view: ${a.segmentName}`:'',`Compared with: ${c.label}`,``,`Overview`,`${a.steps[0].name} to ${last.name} conversion is ${pct(a.overallConversion)}. The period-over-period story is ${dpp(c.overallDelta)} versus the selected baseline.`,``,`Key Findings`,...findings,``,`Weekly Meeting Talk Track`,...meeting(a,c).map(x=>`${x.title}: ${x.body}`),``,`Recommendations`,...a.recommendations.map((r,i)=>`${i+1}. ${r}`)].filter(Boolean).join('\n')}
-function transition(label){const p=String(label||'').replace(/^%+\s*/,'').trim().split(/\s+to\s+/i).map(x=>x.trim()).filter(Boolean);return p.length===2?{from:p[0],to:p[1]}:null}function falloutLabel(x){if(clean(x)==='segments')return'Segment Visits';const p=String(x||'').split(/\s+-->\s+/).map(s=>s.replace(/\[[^\]]+\]\s*/g,'').trim()).filter(Boolean);return p.at(-1)||x}function rate(v){const s=String(v||'').trim();if(!s)return NaN;const n=Number(s.replace(/%/g,'').replace(/,/g,''));return Number.isFinite(n)?s.includes('%')||n>1?n/100:n:NaN}function count(v){const s=String(v||'').replace(/[$,%\s]/g,'').replace(/,/g,'');return s?Number(s):NaN}function clean(v){return String(v||'').trim().toLowerCase().replace(/\s+/g,' ')}function find(h,c){return h.findIndex(x=>c.includes(x))}function pct(v){return`${Math.round(v*1000)/10}%`}function dpp(v){const p=Math.round(v*1000)/10;return`${p>0?'+':''}${p} pp`}function rel(a,b){return b?((a-b)/b):null}function relfmt(v){if(!Number.isFinite(v))return'n/a';const p=Math.round(v*1000)/10;return`${p>0?'+':''}${p}%`}function snum(v){const n=Math.round(v);return`${n>0?'+':''}${fmt(n)}`}function fmt(v){return new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(v)}function tone(v){return v>.0005?'delta-pos':v<-.0005?'delta-neg':'delta-flat'}function esc(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}function card(l,v,n,t=''){return`<article class="card"><div class="label">${esc(l)}</div><div class="value ${t}">${esc(v)}</div><div class="note">${esc(n)}</div></article>`}function bytes(b){return b<1024?`${b} B`:b<1048576?`${(b/1024).toFixed(1)} KB`:`${(b/1048576).toFixed(1)} MB`}function showError(m){els.error.textContent=m;els.error.classList.add('show')}function hideError(){els.error.classList.remove('show')}function toast(m){clearTimeout(timer);els.toast.textContent=m;els.toast.classList.add('show');timer=setTimeout(()=>els.toast.classList.remove('show'),2200)}function copySummary(){els.summary.select();document.execCommand('copy');toast('Summary copied')}function reset(){activeReport=null;activeAnalysis=null;els.file.value='';els.meta.textContent='No file selected';els.source.hidden=true;els.metrics.innerHTML='';els.variance.hidden=true;els.funnel.innerHTML='';els.insights.innerHTML='';els.recs.innerHTML='';els.brief.hidden=true;els.summary.value='';els.reset.disabled=true;hideError()}
-</script>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    const els = {
+      csvInput: document.querySelector("#csvInput"),
+      uploadZone: document.querySelector("#uploadZone"),
+      fileMeta: document.querySelector("#fileMeta"),
+      validation: document.querySelector("#validation"),
+      processing: document.querySelector("#processing"),
+      statusPill: document.querySelector("#statusPill"),
+      emptyState: document.querySelector("#emptyState"),
+      results: document.querySelector("#results"),
+      sourceStrip: document.querySelector("#sourceStrip"),
+      sourceFormat: document.querySelector("#sourceFormat"),
+      sourceNote: document.querySelector("#sourceNote"),
+      segmentMenu: document.querySelector("#segmentMenu"),
+      segmentSelect: document.querySelector("#segmentSelect"),
+      comparisonMenu: document.querySelector("#comparisonMenu"),
+      comparisonSelect: document.querySelector("#comparisonSelect"),
+      metricsGrid: document.querySelector("#metricsGrid"),
+      varianceSection: document.querySelector("#varianceSection"),
+      varianceSubtitle: document.querySelector("#varianceSubtitle"),
+      varianceGrid: document.querySelector("#varianceGrid"),
+      varianceTableWrap: document.querySelector("#varianceTableWrap"),
+      funnelList: document.querySelector("#funnelList"),
+      funnelSubtitle: document.querySelector("#funnelSubtitle"),
+      healthLabel: document.querySelector("#healthLabel"),
+      insightsList: document.querySelector("#insightsList"),
+      recommendations: document.querySelector("#recommendations"),
+      meetingPanel: document.querySelector("#meetingPanel"),
+      meetingSubtitle: document.querySelector("#meetingSubtitle"),
+      meetingBrief: document.querySelector("#meetingBrief"),
+      summaryText: document.querySelector("#summaryText"),
+      copySummary: document.querySelector("#copySummary"),
+      downloadPdf: document.querySelector("#downloadPdf"),
+      loadSample: document.querySelector("#loadSample"),
+      resetApp: document.querySelector("#resetApp"),
+      toast: document.querySelector("#toast")
+    };
+
+    const sampleCsv = [
+      "Funnel Step,Users",
+      "Cart,100000",
+      "Shipping,82000",
+      "Payment,62000",
+      "Review,58000",
+      "Purchase,55000"
+    ].join("\n");
+
+    let activeAnalysis = null;
+    let activeReport = null;
+    let toastTimer = null;
+
+    els.csvInput.addEventListener("change", event => {
+      const file = event.target.files && event.target.files[0];
+      if (file) {
+        readFile(file);
+      }
+    });
+
+    ["dragenter", "dragover"].forEach(name => {
+      els.uploadZone.addEventListener(name, event => {
+        event.preventDefault();
+        els.uploadZone.classList.add("is-dragging");
+      });
+    });
+
+    ["dragleave", "drop"].forEach(name => {
+      els.uploadZone.addEventListener(name, event => {
+        event.preventDefault();
+        els.uploadZone.classList.remove("is-dragging");
+      });
+    });
+
+    els.uploadZone.addEventListener("drop", event => {
+      const file = event.dataTransfer.files && event.dataTransfer.files[0];
+      if (file) {
+        readFile(file);
+      }
+    });
+
+    els.loadSample.addEventListener("click", () => {
+      setFileMeta("Sample checkout funnel", "5 rows");
+      processCsv(sampleCsv, "Sample checkout funnel");
+    });
+
+    els.resetApp.addEventListener("click", resetApp);
+    els.copySummary.addEventListener("click", copySummary);
+    els.downloadPdf.addEventListener("click", downloadSummaryPdf);
+    els.segmentSelect.addEventListener("change", () => {
+      if (!activeReport) {
+        return;
+      }
+      activeReport.selectedIndex = Number(els.segmentSelect.value);
+      activeReport.comparisonIndex = chooseDefaultComparisonIndex(activeReport, activeReport.selectedIndex);
+      renderComparisonOptions(activeReport);
+      renderAnalysis(activeReport.analyses[activeReport.selectedIndex]);
+      showToast("View updated");
+    });
+    els.comparisonSelect.addEventListener("change", () => {
+      if (!activeReport) {
+        return;
+      }
+      activeReport.comparisonIndex = els.comparisonSelect.value === "" ? -1 : Number(els.comparisonSelect.value);
+      renderAnalysis(activeReport.analyses[activeReport.selectedIndex]);
+      showToast("Comparison updated");
+    });
+
+    function readFile(file) {
+      const lowerName = file.name.toLowerCase();
+      const isCsv = lowerName.endsWith(".csv") || file.type === "text/csv";
+      const isPdf = lowerName.endsWith(".pdf") || file.type === "application/pdf";
+
+      if (!isCsv && !isPdf) {
+        showValidation("Upload a CSV or PDF file.");
+        return;
+      }
+
+      setFileMeta(file.name, formatBytes(file.size));
+
+      if (isPdf) {
+        processPdfFile(file);
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => processCsv(String(reader.result || ""), file.name);
+      reader.onerror = () => showValidation("The file could not be read.");
+      reader.readAsText(file);
+    }
+
+    async function processPdfFile(file) {
+      clearValidation();
+      setProcessing(true);
+      setStatus("Processing");
+
+      try {
+        const text = await extractPdfText(file);
+        const report = normalizePdfNarrative(text, file.name);
+        renderReport(report);
+      } catch (error) {
+        showValidation(error.message || "The PDF could not be processed.");
+        setStatus("Ready");
+      } finally {
+        setProcessing(false);
+      }
+    }
+
+    async function extractPdfText(file) {
+      if (!window.pdfjsLib) {
+        throw new Error("PDF parsing library could not be loaded. Check your network connection or paste the PDF text into a CSV export workflow.");
+      }
+
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+      const bytes = await file.arrayBuffer();
+      const pdf = await window.pdfjsLib.getDocument({ data: bytes }).promise;
+      const pages = [];
+
+      for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
+        const page = await pdf.getPage(pageNumber);
+        const content = await page.getTextContent();
+        pages.push(content.items.map(item => item.str || "").join(" "));
+      }
+
+      const text = pages.join("\n");
+      if (!text.trim()) {
+        throw new Error("No readable text was found in the PDF.");
+      }
+
+      return text;
+    }
+
+    function processCsv(text, sourceName) {
+      clearValidation();
+      setProcessing(true);
+      setStatus("Processing");
+
+      window.setTimeout(() => {
+        try {
+          const rows = parseCsv(text);
+          const report = normalizeImport(rows, sourceName);
+          renderReport(report);
+        } catch (error) {
+          showValidation(error.message || "The CSV could not be processed.");
+          setStatus("Ready");
+        } finally {
+          setProcessing(false);
+        }
+      }, 450);
+    }
+
+    function parseCsv(text) {
+      const rows = [];
+      let row = [];
+      let value = "";
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i += 1) {
+        const char = text[i];
+        const next = text[i + 1];
+
+        if (char === "\"") {
+          if (inQuotes && next === "\"") {
+            value += "\"";
+            i += 1;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (char === "," && !inQuotes) {
+          row.push(value);
+          value = "";
+        } else if ((char === "\n" || char === "\r") && !inQuotes) {
+          if (char === "\r" && next === "\n") {
+            i += 1;
+          }
+          row.push(value);
+          if (row.some(cell => cell.trim() !== "")) {
+            rows.push(row);
+          }
+          row = [];
+          value = "";
+        } else {
+          value += char;
+        }
+      }
+
+      row.push(value);
+      if (row.some(cell => cell.trim() !== "")) {
+        rows.push(row);
+      }
+
+      if (rows.length < 2) {
+        throw new Error("The CSV needs a header row and at least one funnel step.");
+      }
+
+      return rows;
+    }
+
+    function normalizeImport(rows, sourceName) {
+      const adobeReport = tryNormalizeAdobeStepConversion(rows, sourceName);
+      if (adobeReport) {
+        return adobeReport;
+      }
+
+      const adobeFalloutReport = tryNormalizeAdobeFalloutFunnel(rows, sourceName);
+      if (adobeFalloutReport) {
+        return adobeFalloutReport;
+      }
+
+      const normalized = normalizeRows(rows);
+      return {
+        sourceName,
+        formatLabel: "Simple funnel CSV",
+        note: "Raw step counts from the uploaded CSV.",
+        analyses: [
+          analyzeFunnel(normalized, {
+          sourceName,
+          formatLabel: "Simple funnel CSV",
+          unitLabel: "users or sessions",
+          segmentGroup: "Uploaded funnel",
+          periodName: ""
+        })
+        ],
+        selectedIndex: 0
+      };
+    }
+
+    function normalizePdfNarrative(text, sourceName) {
+      const normalized = normalizePdfText(text);
+      if (!/Cart\s*&\s*Checkout Funnel Health Readout/i.test(normalized)) {
+        throw new Error("This PDF does not look like a supported Augmeta Cart & Checkout narrative.");
+      }
+
+      const title = matchText(normalized, /(FY\d{4}[-–]W\d+\s+Cart\s*&\s*Checkout Funnel Health Readout)/i) || "Cart & Checkout Funnel Health Readout";
+      const focal = matchText(normalized, /Focal:\s*([^·]+?)\s*·/i) || "";
+      const trailing = matchText(normalized, /Trailing:\s*([^·]+?)\s*·/i) || "";
+      const yoy = matchText(normalized, /YoY:\s*([^\.]+?)\./i) || "";
+      const narrative = {
+        title,
+        focal,
+        trailing,
+        yoy,
+        summary: compactNarrative(extractBetween(normalized, "Summary", "The Tension")),
+        watch: compactNarrative(extractBetween(normalized, "Watch items", "Confirmed vs Open")),
+        confirmed: compactNarrative(extractBetween(normalized, "Confirmed (HIGH):", "Open hypotheses:")),
+        open: compactNarrative(extractAfter(normalized, "Open hypotheses:"))
+      };
+
+      const cartRates = parseCartToCheckoutRows(normalized);
+      const completionRates = parseCheckoutToOrderRows(normalized);
+      const contextRows = parseFunnelContextRows(normalized);
+      const deviceOrder = ["Overall", "Web Only", "Mobile Web", "Desktop", "Mobile App"];
+      const analyses = [];
+
+      deviceOrder.forEach(device => {
+        const cartRow = cartRates.get(device);
+        const completionRow = completionRates.get(device);
+        if (!cartRow || !completionRow) {
+          return;
+        }
+
+        const context = contextRows.get(device);
+        const hasCounts = context && Number.isFinite(context.carts) && Number.isFinite(context.checkouts);
+        const cartCount = hasCounts ? context.carts : 100000;
+        const checkoutCount = hasCounts ? context.checkouts : cartCount * cartRow.w25;
+        const orderCount = checkoutCount * completionRow.w25;
+        const steps = [
+          { step: "Cart", count: cartCount },
+          { step: "Checkout Started", count: checkoutCount },
+          { step: "Order", count: orderCount }
+        ];
+
+        analyses.push(analyzeFunnel(steps, {
+          sourceName,
+          segmentName: `${device}${focal ? ` - ${focal}` : ""}`,
+          segmentGroup: device,
+          periodName: focal,
+          formatLabel: "Augmeta Weekly Narrative PDF",
+          unitLabel: hasCounts ? "visits" : "modeled carts",
+          inputType: hasCounts ? "counts" : "rates",
+          isIndexed: !hasCounts,
+          baselineCount: cartCount,
+          sourceNote: hasCounts ? "PDF funnel context counts are used directly." : "PDF rates are indexed from 100,000 carts.",
+          narrative,
+          pdfMetrics: {
+            cartToCheckout: cartRow,
+            checkoutToOrder: completionRow,
+            context
+          }
+        }));
+      });
+
+      if (!analyses.length) {
+        throw new Error("The PDF was readable, but the app could not find the expected cart and checkout metric tables.");
+      }
+
+      return {
+        sourceName,
+        formatLabel: "Augmeta Weekly Narrative PDF",
+        note: `${title}${focal ? ` · ${focal}` : ""}`,
+        analyses,
+        selectedIndex: 0,
+        disableComparison: true
+      };
+    }
+
+    function normalizePdfText(text) {
+      return String(text || "")
+        .replace(/\u2212/g, "-")
+        .replace(/\u2013/g, "-")
+        .replace(/\u2014/g, "-")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function parseCartToCheckoutRows(text) {
+      const section = extractBetween(text, "CART TO CHECKOUT", "Flat / mixed") || extractBetween(text, "CART TO CHECKOUT", "METRIC DEVICE");
+      const rows = new Map();
+      const rowPattern = /\b(Overall|Desktop|Mobile Web|Web Only|Mobile App)\s+([0-9.]+)%\s+([+-]?[0-9.]+)%\s+([+-]?[0-9.]+)%\s+([+-]?[0-9.]+)%/gi;
+      let match;
+
+      while ((match = rowPattern.exec(section)) !== null) {
+        rows.set(titleCaseDevice(match[1]), {
+          w25: parsePdfPercent(match[2]),
+          wow: parsePdfDelta(match[3]),
+          yoy: parsePdfDelta(match[4]),
+          trail: parsePdfDelta(match[5])
+        });
+      }
+
+      return rows;
+    }
+
+    function parseCheckoutToOrderRows(text) {
+      const section = extractBetween(text, "Flat / mixed", "Funnel context") || text;
+      const rows = new Map();
+      const rowPattern = /%\s*Checkout\s+to\s+Order\s+(Overall|Web Only|Desktop|Mobile Web|Mobile App)\s+([0-9.]+)%\s+(?:⚠\s*)?([+-]?[0-9.]+%|n\/m)\s+(?:⚠\s*)?([+-]?[0-9.]+%|n\/m)\s+(?:⚠\s*)?([+-]?[0-9.]+%|n\/m)/gi;
+      let match;
+
+      while ((match = rowPattern.exec(section)) !== null) {
+        rows.set(titleCaseDevice(match[1]), {
+          w25: parsePdfPercent(match[2]),
+          wow: parsePdfDelta(match[3]),
+          trail: parsePdfDelta(match[4]),
+          yoy: parsePdfDelta(match[5])
+        });
+      }
+
+      return rows;
+    }
+
+    function parseFunnelContextRows(text) {
+      const section = extractBetween(text, "Funnel context", "Further context") || text;
+      const rows = new Map();
+      const rowPattern = /\b(Web Only|Mobile Web|Desktop)\s+([0-9.]+)K\s+([+-]?[0-9.]+)%\s+([0-9.]+)%\s+(?:\([^)]*\)\s+)?([0-9.]+)K/gi;
+      let match;
+
+      while ((match = rowPattern.exec(section)) !== null) {
+        rows.set(titleCaseDevice(match[1]), {
+          carts: parseKValue(match[2]),
+          cartsYoy: parsePdfDelta(match[3]),
+          checkoutStartedRate: parsePdfPercent(match[4]),
+          checkouts: parseKValue(match[5])
+        });
+      }
+
+      return rows;
+    }
+
+    function extractBetween(text, startLabel, endLabel) {
+      const lower = text.toLowerCase();
+      const start = lower.indexOf(startLabel.toLowerCase());
+      if (start === -1) {
+        return "";
+      }
+
+      const afterStart = start + startLabel.length;
+      const end = lower.indexOf(endLabel.toLowerCase(), afterStart);
+      return text.slice(afterStart, end === -1 ? undefined : end).trim();
+    }
+
+    function extractAfter(text, startLabel) {
+      const start = text.toLowerCase().indexOf(startLabel.toLowerCase());
+      return start === -1 ? "" : text.slice(start + startLabel.length).trim();
+    }
+
+    function compactNarrative(value) {
+      return String(value || "")
+        .replace(/6\/\d+\/\d+,\s+\d+:\d+\s+[AP]M.*?(\d+\/4)/gi, "")
+        .replace(/https?:\/\/\S+/gi, "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function matchText(text, pattern) {
+      const match = text.match(pattern);
+      return match ? match[1].trim() : "";
+    }
+
+    function parsePdfPercent(value) {
+      return Number(String(value || "").replace(/%/g, "")) / 100;
+    }
+
+    function parsePdfDelta(value) {
+      const cleaned = String(value || "").trim().toLowerCase();
+      if (!cleaned || cleaned === "n/m") {
+        return null;
+      }
+      return Number(cleaned.replace(/%/g, "")) / 100;
+    }
+
+    function parseKValue(value) {
+      return Number(String(value || "").replace(/,/g, "")) * 1000;
+    }
+
+    function titleCaseDevice(value) {
+      const cleaned = String(value || "").trim().toLowerCase();
+      if (cleaned === "web only") return "Web Only";
+      if (cleaned === "mobile web") return "Mobile Web";
+      if (cleaned === "mobile app") return "Mobile App";
+      if (cleaned === "desktop") return "Desktop";
+      return "Overall";
+    }
+
+    function tryNormalizeAdobeStepConversion(rows, sourceName) {
+      const usefulRows = rows
+        .map(row => row.map(cell => String(cell || "").trim()))
+        .filter(row => row.some(cell => cell !== ""))
+        .filter(row => !String(row[0] || "").trim().startsWith("#"));
+
+      const headerIndex = usefulRows.findIndex((row, index) => {
+        const firstCell = String(row[0] || "").trim();
+        const hasSegments = firstCell === "" && row.slice(1).some(cell => cell.trim() !== "");
+        const nextRows = usefulRows.slice(index + 1, index + 7);
+        return hasSegments && nextRows.some(nextRow => cleanHeader(nextRow[0]).startsWith("% "));
+      });
+
+      if (headerIndex === -1) {
+        return null;
+      }
+
+      const headerRow = usefulRows[headerIndex];
+      const dataRows = usefulRows.slice(headerIndex + 1);
+      const stepRows = dataRows.filter(row => cleanHeader(row[0]).startsWith("% "));
+
+      if (stepRows.length < 1) {
+        return null;
+      }
+
+      const overallRow = dataRows.find(row => cleanHeader(row[0]) === "conversion rate");
+      const segmentColumns = headerRow
+        .map((name, index) => ({ name: name.trim(), index }))
+        .filter(item => item.index > 0 && item.name);
+
+      const analyses = segmentColumns.map(segment => {
+        const steps = buildStepsFromAdobeRates(stepRows, segment.index);
+        if (!steps) {
+          return null;
+        }
+
+        const overallRate = overallRow ? parseRate(overallRow[segment.index]) : null;
+        return analyzeFunnel(steps, {
+          sourceName,
+          segmentName: segment.name,
+          segmentGroup: segment.name,
+          periodName: "",
+          formatLabel: "Adobe Analytics Step Conversion",
+          unitLabel: "modeled starts",
+          inputType: "rates",
+          isIndexed: true,
+          baselineCount: 100000,
+          officialOverallRate: Number.isFinite(overallRate) ? overallRate : null,
+          sourceNote: "Adobe exports rates only, so counts are indexed from 100,000 starts."
+        });
+      }).filter(Boolean);
+
+      if (!analyses.length) {
+        return null;
+      }
+
+      return {
+        sourceName,
+        formatLabel: "Adobe Analytics Step Conversion",
+        note: "Rates converted into indexed funnels from 100,000 starts.",
+        analyses,
+        selectedIndex: 0
+      };
+    }
+
+    function tryNormalizeAdobeFalloutFunnel(rows, sourceName) {
+      const usefulRows = rows
+        .map(row => row.map(cell => String(cell || "").trim()))
+        .filter(row => row.some(cell => cell !== ""))
+        .filter(row => !String(row[0] || "").trim().startsWith("#"));
+
+      const segmentsIndex = usefulRows.findIndex(row => {
+        return cleanHeader(row[0]) === "segments" && row.slice(1).some(cell => Number.isFinite(parseCount(cell)));
+      });
+
+      if (segmentsIndex < 3) {
+        return null;
+      }
+
+      const segmentHeader = usefulRows[segmentsIndex - 3] || [];
+      const metricHeader = usefulRows[segmentsIndex - 2] || [];
+      const periodHeader = usefulRows[segmentsIndex - 1] || [];
+      const dataRows = usefulRows.slice(segmentsIndex).filter(row => {
+        const label = String(row[0] || "").trim();
+        return label && row.slice(1).some(cell => Number.isFinite(parseCount(cell)));
+      });
+
+      if (dataRows.length < 2) {
+        return null;
+      }
+
+      const maxColumns = Math.max(
+        segmentHeader.length,
+        metricHeader.length,
+        periodHeader.length,
+        ...dataRows.map(row => row.length)
+      );
+      const analyses = [];
+
+      for (let columnIndex = 1; columnIndex < maxColumns; columnIndex += 1) {
+        const firstValue = parseCount(dataRows[0][columnIndex]);
+        if (!Number.isFinite(firstValue) || firstValue <= 0) {
+          continue;
+        }
+
+        const items = dataRows.map(row => {
+          const count = parseCount(row[columnIndex]);
+          if (!Number.isFinite(count)) {
+            return null;
+          }
+
+          return {
+            step: formatFalloutStepLabel(row[0]),
+            count
+          };
+        }).filter(Boolean);
+
+        if (items.length < 2) {
+          continue;
+        }
+
+        const segmentName = segmentHeader[columnIndex] || `Segment ${columnIndex}`;
+        const metricName = metricHeader[columnIndex] || "Visits";
+        const periodName = periodHeader[columnIndex] || "";
+        const optionName = [segmentName, periodName].filter(Boolean).join(" - ");
+
+        analyses.push(analyzeFunnel(items, {
+          sourceName,
+          segmentName: optionName || segmentName,
+          segmentGroup: segmentName,
+          periodName,
+          metricName,
+          formatLabel: "Adobe Analytics Fallout Funnel",
+          unitLabel: metricName.toLowerCase(),
+          inputType: "counts",
+          isIndexed: false,
+          sourceNote: "Adobe cumulative fallout counts are used directly."
+        }));
+      }
+
+      if (!analyses.length) {
+        return null;
+      }
+
+      return {
+        sourceName,
+        formatLabel: "Adobe Analytics Fallout Funnel",
+        note: "Cumulative fallout counts by segment and date range.",
+        analyses,
+        selectedIndex: 0
+      };
+    }
+
+    function buildStepsFromAdobeRates(stepRows, columnIndex) {
+      const transitions = stepRows.map(row => {
+        const parsed = parseStepTransition(row[0]);
+        const rate = parseRate(row[columnIndex]);
+        if (!parsed || !Number.isFinite(rate)) {
+          return null;
+        }
+        return { ...parsed, rate };
+      }).filter(Boolean);
+
+      if (!transitions.length) {
+        return null;
+      }
+
+      const baseline = 100000;
+      const steps = [{ step: transitions[0].from, count: baseline }];
+      let currentCount = baseline;
+
+      transitions.forEach(transition => {
+        currentCount *= transition.rate;
+        steps.push({ step: transition.to, count: currentCount });
+      });
+
+      return steps;
+    }
+
+    function parseStepTransition(label) {
+      const cleaned = String(label || "")
+        .replace(/^%+\s*/, "")
+        .trim();
+      const parts = cleaned.split(/\s+to\s+/i).map(part => part.trim()).filter(Boolean);
+
+      if (parts.length !== 2) {
+        return null;
+      }
+
+      return {
+        from: parts[0],
+        to: parts[1]
+      };
+    }
+
+    function formatFalloutStepLabel(label) {
+      const cleaned = String(label || "").trim();
+      if (cleanHeader(cleaned) === "segments") {
+        return "Segment Visits";
+      }
+
+      const parts = cleaned.split(/\s+-->\s+/).map(part => {
+        return part.replace(/\[[^\]]+\]\s*/g, "").trim();
+      }).filter(Boolean);
+
+      return parts.length ? parts[parts.length - 1] : cleaned;
+    }
+
+    function parseRate(value) {
+      const cleaned = String(value || "").trim();
+      if (!cleaned) {
+        return NaN;
+      }
+
+      const numeric = Number(cleaned.replace(/%/g, "").replace(/,/g, ""));
+      if (!Number.isFinite(numeric)) {
+        return NaN;
+      }
+
+      if (cleaned.includes("%") || numeric > 1) {
+        return numeric / 100;
+      }
+
+      return numeric;
+    }
+
+    function normalizeRows(rows) {
+      const headers = rows[0].map(cleanHeader);
+      const stepIndex = findHeader(headers, ["funnel step", "step", "stage", "checkout step"]);
+      const countIndex = findHeader(headers, ["users", "sessions", "user count", "session count", "visits"]);
+
+      if (stepIndex === -1 || countIndex === -1) {
+        throw new Error("Use columns named Funnel Step and Users or Sessions.");
+      }
+
+      const items = rows.slice(1).map((row, index) => {
+        const step = String(row[stepIndex] || "").trim();
+        const countRaw = String(row[countIndex] || "").trim();
+        const count = parseCount(countRaw);
+
+        if (!step) {
+          throw new Error(`Row ${index + 2} is missing a funnel step.`);
+        }
+        if (!Number.isFinite(count) || count < 0) {
+          throw new Error(`Row ${index + 2} has an invalid user or session count.`);
+        }
+
+        return { step, count };
+      });
+
+      if (items.length < 2) {
+        throw new Error("Add at least two funnel steps.");
+      }
+
+      return items;
+    }
+
+    function analyzeFunnel(items, sourceOptions) {
+      const metadata = typeof sourceOptions === "object" && sourceOptions !== null
+        ? sourceOptions
+        : { sourceName: sourceOptions };
+      const sourceName = metadata.sourceName || "Uploaded funnel export";
+      const unitLabel = metadata.unitLabel || "users or sessions";
+      const baselineCount = metadata.baselineCount || items[0].count;
+      const firstCount = items[0].count;
+      const lastCount = items[items.length - 1].count;
+
+      if (firstCount <= 0) {
+        throw new Error("The first funnel step must have a count greater than zero.");
+      }
+
+      const steps = items.map((item, index) => {
+        const previous = index === 0 ? null : items[index - 1].count;
+        const next = index === items.length - 1 ? null : items[index + 1].count;
+        const conversionFromStart = item.count / firstCount;
+        const conversionFromPrevious = previous === null || previous === 0 ? 1 : item.count / previous;
+        const dropToNext = next === null || item.count === 0 ? null : Math.max(0, (item.count - next) / item.count);
+        const lostToNext = next === null ? 0 : Math.max(0, item.count - next);
+
+        return {
+          name: item.step,
+          count: item.count,
+          conversionFromStart,
+          conversionFromPrevious,
+          dropToNext,
+          lostToNext
+        };
+      });
+
+      const dropoffs = steps.slice(0, -1).map((step, index) => ({
+        from: step.name,
+        to: steps[index + 1].name,
+        priorityStep: steps[index + 1].name,
+        rate: step.dropToNext || 0,
+        lost: step.lostToNext
+      }));
+
+      const largestDrop = dropoffs.reduce((best, current) => {
+        if (!best || current.rate > best.rate || (current.rate === best.rate && current.lost > best.lost)) {
+          return current;
+        }
+        return best;
+      }, null);
+
+      const overallConversion = lastCount / firstCount;
+      const health = getHealth(overallConversion);
+      const warnings = buildWarnings(items);
+      const insights = buildInsights(steps, largestDrop, overallConversion, health, warnings, metadata);
+      const recommendations = buildRecommendations(largestDrop, overallConversion, warnings);
+      const summary = buildSummary(sourceName, steps, largestDrop, overallConversion, health, recommendations, warnings, metadata);
+
+      return {
+        sourceName,
+        segmentName: metadata.segmentName || "",
+        segmentGroup: metadata.segmentGroup || metadata.segmentName || "",
+        periodName: metadata.periodName || "",
+        metricName: metadata.metricName || "",
+        formatLabel: metadata.formatLabel || "Funnel CSV",
+        sourceNote: metadata.sourceNote || "",
+        inputType: metadata.inputType || "counts",
+        isIndexed: Boolean(metadata.isIndexed),
+        baselineCount,
+        officialOverallRate: metadata.officialOverallRate,
+        narrative: metadata.narrative || null,
+        pdfMetrics: metadata.pdfMetrics || null,
+        unitLabel,
+        steps,
+        dropoffs,
+        largestDrop,
+        overallConversion,
+        health,
+        warnings,
+        insights,
+        recommendations,
+        summary
+      };
+    }
+
+    function buildWarnings(items) {
+      const warnings = [];
+      for (let i = 1; i < items.length; i += 1) {
+        if (items[i].count > items[i - 1].count) {
+          warnings.push(`${items[i].step} is higher than ${items[i - 1].step}; confirm the export uses a single ordered cohort.`);
+        }
+      }
+      return warnings;
+    }
+
+    function buildInsights(steps, largestDrop, overallConversion, health, warnings, metadata = {}) {
+      const finalStep = steps[steps.length - 1];
+      const firstStep = steps[0];
+      const unitLabel = metadata.unitLabel || "users or sessions";
+      const insights = [];
+
+      if (largestDrop) {
+        const lossPhrase = metadata.isIndexed
+          ? `${formatNumber(largestDrop.lost)} modeled dropoffs per ${formatNumber(metadata.baselineCount || firstStep.count)} starts`
+          : `${formatNumber(largestDrop.lost)} ${unitLabel} lost`;
+        insights.push(`${largestDrop.priorityStep} is the largest friction point, with ${formatPercent(largestDrop.rate)} abandonment from ${largestDrop.from} to ${largestDrop.to} and ${lossPhrase}.`);
+      }
+
+      insights.push(`Overall checkout conversion is ${formatPercent(overallConversion)} from ${firstStep.name} to ${finalStep.name}, which indicates ${health.label.toLowerCase()}.`);
+
+      if (metadata.isIndexed) {
+        insights.push(`Adobe provided step conversion rates rather than raw counts, so this funnel is indexed to ${formatNumber(metadata.baselineCount || firstStep.count)} starts for comparison.`);
+      }
+
+      if (metadata.pdfMetrics) {
+        const cart = metadata.pdfMetrics.cartToCheckout;
+        const completion = metadata.pdfMetrics.checkoutToOrder;
+        insights.push(`Weekly narrative deltas: Cart to Checkout is ${formatDeltaOrNm(cart.wow)} WoW, ${formatDeltaOrNm(cart.trail)} vs trailing, and ${formatDeltaOrNm(cart.yoy)} YoY; Checkout to Order is ${formatDeltaOrNm(completion.wow)} WoW and ${formatDeltaOrNm(completion.yoy)} YoY.`);
+      }
+
+      if (metadata.narrative && metadata.narrative.summary) {
+        insights.push(`Narrative headline: ${firstSentence(metadata.narrative.summary)}`);
+      }
+
+      const steadySteps = steps.slice(1).filter(step => step.conversionFromPrevious >= 0.94);
+      if (steadySteps.length) {
+        insights.push(`${steadySteps.map(step => step.name).join(", ")} retained at least 94% of traffic from the prior step.`);
+      } else {
+        insights.push("Every step after entry loses more than 6% of traffic, so the funnel likely needs a full step-by-step review.");
+      }
+
+      if (warnings.length) {
+        insights.push(`Data check: ${warnings[0]}`);
+      }
+
+      return insights;
+    }
+
+    function buildRecommendations(largestDrop, overallConversion, warnings) {
+      const recs = [];
+      if (largestDrop) {
+        const lower = largestDrop.priorityStep.toLowerCase();
+        if (lower.includes("payment")) {
+          recs.push("Review payment form usability, validation errors, tender availability, wallet options, and mobile completion issues.");
+        } else if (lower.includes("shipping") || lower.includes("delivery")) {
+          recs.push("Inspect shipping speed, cost presentation, address validation, and delivery promise clarity.");
+        } else if (lower.includes("cart")) {
+          recs.push("Audit cart totals, promo entry, availability messaging, and the path into checkout.");
+        } else if (lower.includes("checkout")) {
+          recs.push("Review checkout entry, sign-in friction, address capture, payment readiness, and page performance by device.");
+        } else if (lower.includes("order")) {
+          recs.push("Inspect final order submission errors, payment authorization failures, and confirmation-page tracking integrity.");
+        } else if (lower.includes("review")) {
+          recs.push("Check final price changes, order review clarity, and place-order error states.");
+        } else {
+          recs.push(`Prioritize qualitative and analytics review around ${largestDrop.priorityStep}.`);
+        }
+      }
+
+      if (overallConversion < 0.5) {
+        recs.push("Pair the largest-dropoff review with device, browser, and traffic-source segmentation.");
+      } else {
+        recs.push("Segment the largest dropoff by device and new versus returning customer before changing UX.");
+      }
+
+      if (warnings.length) {
+        recs.push("Validate that each step is calculated from the same cohort before presenting the analysis.");
+      }
+
+      return recs.slice(0, 3);
+    }
+
+    function buildSummary(sourceName, steps, largestDrop, overallConversion, health, recommendations, warnings, metadata = {}) {
+      const first = steps[0];
+      const last = steps[steps.length - 1];
+      const unitLabel = metadata.unitLabel || "users or sessions";
+      const sourceLines = [
+        sourceName ? `Source: ${sourceName}` : "Source: Uploaded funnel export"
+      ];
+
+      if (metadata.formatLabel) {
+        sourceLines.push(`Format: ${metadata.formatLabel}`);
+      }
+      if (metadata.segmentName) {
+        sourceLines.push(`Segment: ${metadata.segmentName}`);
+      }
+
+      const overview = metadata.isIndexed
+        ? `The selected segment converts ${formatPercent(overallConversion)} from ${first.name} to ${last.name}. Because this Adobe export contains rates rather than raw counts, the funnel is modeled from ${formatNumber(metadata.baselineCount || first.count)} starts and ends at ${formatNumber(last.count)} modeled completions. Funnel health is assessed as ${health.label.toLowerCase()}.`
+        : `The checkout funnel converts ${formatPercent(overallConversion)} of ${unitLabel} from ${first.name} (${formatNumber(first.count)}) to ${last.name} (${formatNumber(last.count)}). Funnel health is assessed as ${health.label.toLowerCase()}.`;
+
+      const dropLine = largestDrop
+        ? metadata.isIndexed
+          ? `The largest dropoff is at ${largestDrop.priorityStep}, where ${formatPercent(largestDrop.rate)} abandon between ${largestDrop.from} and ${largestDrop.to} (${formatNumber(largestDrop.lost)} modeled dropoffs per ${formatNumber(metadata.baselineCount || first.count)} starts).`
+          : `The largest dropoff is at ${largestDrop.priorityStep}, where ${formatPercent(largestDrop.rate)} of ${unitLabel} abandon between ${largestDrop.from} and ${largestDrop.to} (${formatNumber(largestDrop.lost)} lost).`
+        : "No step-level dropoff was detected.";
+
+      const warningLine = warnings.length
+        ? `Data note: ${warnings.join(" ")}`
+        : metadata.isIndexed
+          ? "Data note: Adobe step conversion rates were converted into indexed counts for visualization; use the percentages as the primary source of truth."
+          : "Data note: Step counts decrease or hold steady through the funnel.";
+
+      const officialRateLine = Number.isFinite(metadata.officialOverallRate)
+        ? `3. Adobe reported an overall Conversion Rate of ${formatPercent(metadata.officialOverallRate)} for this segment.`
+        : "";
+      const keyFindings = [
+        `1. ${dropLine}`,
+        `2. The final step retains ${formatPercent(last.conversionFromStart)} of the initial checkout population.`
+      ];
+
+      if (officialRateLine) {
+        keyFindings.push(officialRateLine);
+      }
+
+      keyFindings.push(`${officialRateLine ? "4" : "3"}. ${warningLine}`);
+
+      const narrativeLines = buildNarrativeSummaryLines(metadata.narrative, metadata.pdfMetrics);
+
+      return [
+        "Checkout Funnel Analyzer Executive Summary",
+        "",
+        ...sourceLines,
+        "",
+        "Overview",
+        overview,
+        "",
+        "Key Findings",
+        ...keyFindings,
+        ...narrativeLines,
+        "",
+        "Recommendations",
+        ...recommendations.map((rec, index) => `${index + 1}. ${rec}`)
+      ].join("\n");
+    }
+
+    function getHealth(overallConversion) {
+      if (overallConversion >= 0.7) {
+        return { label: "Strong funnel health", color: "green" };
+      }
+      if (overallConversion >= 0.5) {
+        return { label: "Moderate funnel health", color: "amber" };
+      }
+      if (overallConversion >= 0.35) {
+        return { label: "Constrained funnel health", color: "red" };
+      }
+      return { label: "High-friction funnel health", color: "red" };
+    }
+
+    function chooseDefaultComparisonIndex(report, selectedIndex) {
+      if (!report || report.disableComparison || report.analyses.length < 2) {
+        return -1;
+      }
+
+      const current = report.analyses[selectedIndex];
+      const sameGroup = report.analyses
+        .map((analysis, index) => ({ analysis, index }))
+        .filter(item => item.index !== selectedIndex && item.analysis.segmentGroup === current.segmentGroup);
+
+      const currentPeriod = cleanHeader(current.periodName);
+      const periodPriority = [];
+
+      if (currentPeriod.includes("last 7")) {
+        periodPriority.push("last 30", "last 90");
+      } else if (currentPeriod === "ytd") {
+        periodPriority.push("ytd ly");
+      } else if (currentPeriod.includes("last 30")) {
+        periodPriority.push("last 90", "last 7");
+      } else if (currentPeriod.includes("last 90")) {
+        periodPriority.push("last 30", "last 7");
+      } else if (currentPeriod.includes("ytd ly")) {
+        periodPriority.push("ytd");
+      }
+
+      for (const target of periodPriority) {
+        const match = sameGroup.find(item => cleanHeader(item.analysis.periodName).includes(target));
+        if (match) {
+          return match.index;
+        }
+      }
+
+      if (sameGroup.length) {
+        return sameGroup[0].index;
+      }
+
+      return report.analyses.findIndex((analysis, index) => index !== selectedIndex);
+    }
+
+    function getActiveComparison() {
+      if (!activeReport || activeReport.comparisonIndex < 0) {
+        return null;
+      }
+
+      const baseline = activeReport.analyses[activeReport.comparisonIndex];
+      if (!baseline || baseline === activeAnalysis) {
+        return null;
+      }
+
+      return buildComparison(activeAnalysis, baseline);
+    }
+
+    function buildComparison(current, baseline) {
+      const stepRows = current.steps.map((step, index) => {
+        const baselineStep = baseline.steps.find(candidate => candidate.name === step.name) || baseline.steps[index];
+        if (!baselineStep) {
+          return null;
+        }
+
+        return {
+          step: step.name,
+          currentRate: step.conversionFromPrevious,
+          baselineRate: baselineStep.conversionFromPrevious,
+          delta: step.conversionFromPrevious - baselineStep.conversionFromPrevious,
+          currentCount: step.count,
+          baselineCount: baselineStep.count,
+          countDelta: step.count - baselineStep.count
+        };
+      }).filter(Boolean);
+
+      const comparableSteps = stepRows.filter(row => row.step !== current.steps[0].name);
+      const largestMovement = comparableSteps.reduce((best, row) => {
+        if (!best || Math.abs(row.delta) > Math.abs(best.delta)) {
+          return row;
+        }
+        return best;
+      }, null);
+
+      const currentLast = current.steps[current.steps.length - 1];
+      const baselineLast = baseline.steps[baseline.steps.length - 1];
+      const currentFirst = current.steps[0];
+      const baselineFirst = baseline.steps[0];
+
+      return {
+        current,
+        baseline,
+        label: baseline.segmentName || baseline.sourceName || "comparison",
+        periodsDiffer: Boolean(current.periodName && baseline.periodName && current.periodName !== baseline.periodName),
+        overallDelta: current.overallConversion - baseline.overallConversion,
+        entryDelta: currentFirst.count - baselineFirst.count,
+        entryRelativeDelta: safeRelativeDelta(currentFirst.count, baselineFirst.count),
+        completionDelta: currentLast.count - baselineLast.count,
+        completionRelativeDelta: safeRelativeDelta(currentLast.count, baselineLast.count),
+        largestMovement,
+        stepRows
+      };
+    }
+
+    function safeRelativeDelta(current, baseline) {
+      if (!Number.isFinite(baseline) || baseline === 0) {
+        return null;
+      }
+      return (current - baseline) / baseline;
+    }
+
+    function buildMeetingBrief(analysis, comparison) {
+      if (!comparison) {
+        if (analysis.narrative) {
+          return [
+            {
+              title: "Headline",
+              body: firstSentence(analysis.narrative.summary) || `${analysis.segmentName || "Current funnel"} converts at ${formatPercent(analysis.overallConversion)}.`
+            },
+            {
+              title: "Explain",
+              body: firstSentence(analysis.narrative.confirmed) || `${analysis.largestDrop.priorityStep} is the largest current friction point.`
+            },
+            {
+              title: "Ask",
+              body: firstSentence(analysis.narrative.open) || analysis.recommendations[0] || "Review the highest-friction step before the next meeting."
+            }
+          ];
+        }
+
+        return [
+          {
+            title: "Headline",
+            body: `${analysis.segmentName || "Current funnel"} converts at ${formatPercent(analysis.overallConversion)}, with ${analysis.largestDrop.priorityStep} as the largest dropoff.`
+          },
+          {
+            title: "Explain",
+            body: "Use the largest-dropoff step and the step conversion table to focus the conversation on where users are leaving."
+          },
+          {
+            title: "Ask",
+            body: analysis.recommendations[0] || "Review the highest-friction step before the next meeting."
+          }
+        ];
+      }
+
+      const movement = comparison.largestMovement;
+      const direction = comparison.overallDelta > 0 ? "up" : comparison.overallDelta < 0 ? "down" : "flat";
+      const movementDirection = movement && movement.delta > 0 ? "improved" : movement && movement.delta < 0 ? "declined" : "held flat";
+
+      return [
+        {
+          title: "Headline",
+          body: `${analysis.segmentName || "Current funnel"} is ${direction} ${formatDeltaPoints(comparison.overallDelta)} in overall conversion versus ${comparison.label}.`
+        },
+        {
+          title: "Explain",
+          body: movement
+            ? `${movement.step} ${movementDirection} by ${formatDeltaPoints(movement.delta)} in step conversion and is the biggest movement to call out.`
+            : "Step-level movement is limited, so frame the readout around overall conversion and volume."
+        },
+        {
+          title: "Ask",
+          body: analysis.recommendations[0] || `Prioritize investigation around ${analysis.largestDrop.priorityStep}.`
+        }
+      ];
+    }
+
+    function buildExecutiveSummary(analysis, comparison) {
+      if (!comparison) {
+        return analysis.summary;
+      }
+
+      const movement = comparison.largestMovement;
+      const first = analysis.steps[0];
+      const last = analysis.steps[analysis.steps.length - 1];
+      const keyFindings = [
+        `1. Overall conversion is ${formatPercent(analysis.overallConversion)} versus ${formatPercent(comparison.baseline.overallConversion)} for ${comparison.label}, a ${formatDeltaPoints(comparison.overallDelta)} change.`,
+        `2. ${analysis.largestDrop.priorityStep} remains the largest current friction point, with ${formatPercent(analysis.largestDrop.rate)} abandonment between ${analysis.largestDrop.from} and ${analysis.largestDrop.to}.`
+      ];
+
+      if (movement) {
+        keyFindings.push(`3. The biggest step-level movement is ${movement.step}, changing ${formatDeltaPoints(movement.delta)} versus the comparison baseline.`);
+      }
+
+      keyFindings.push(comparison.periodsDiffer
+        ? `${movement ? "4" : "3"}. Current completion volume is ${formatNumber(last.count)} ${analysis.unitLabel}; because the comparison window is ${comparison.baseline.periodName}, treat conversion-rate deltas as the primary performance signal.`
+        : `${movement ? "4" : "3"}. Completion volume is ${formatRelativeDelta(comparison.completionRelativeDelta)} versus the comparison baseline (${formatSignedNumber(comparison.completionDelta)} ${analysis.unitLabel}).`
+      );
+
+      return [
+        "Checkout Funnel Analyzer Executive Summary",
+        "",
+        `Source: ${analysis.sourceName}`,
+        `Format: ${analysis.formatLabel}`,
+        analysis.segmentName ? `Current view: ${analysis.segmentName}` : "",
+        `Compared with: ${comparison.label}`,
+        "",
+        "Overview",
+        `${first.name} to ${last.name} conversion is ${formatPercent(analysis.overallConversion)}. The period-over-period story is ${formatDeltaPoints(comparison.overallDelta)} versus the selected baseline, with funnel health assessed as ${analysis.health.label.toLowerCase()}.`,
+        "",
+        "Key Findings",
+        ...keyFindings,
+        "",
+        "Weekly Meeting Talk Track",
+        ...buildMeetingBrief(analysis, comparison).map(item => `${item.title}: ${item.body}`),
+        "",
+        "Recommendations",
+        ...analysis.recommendations.map((rec, index) => `${index + 1}. ${rec}`)
+      ].filter(line => line !== "").join("\n");
+    }
+
+    function renderReport(report) {
+      activeReport = report;
+      activeReport.comparisonIndex = chooseDefaultComparisonIndex(report, report.selectedIndex);
+      renderSourceStrip(report);
+      renderAnalysis(report.analyses[report.selectedIndex]);
+    }
+
+    function renderSourceStrip(report) {
+      els.sourceStrip.hidden = false;
+      els.sourceFormat.textContent = report.formatLabel;
+      els.sourceNote.textContent = report.note;
+      els.segmentSelect.innerHTML = report.analyses.map((analysis, index) => `
+        <option value="${index}">${escapeHtml(analysis.segmentName || `Funnel ${index + 1}`)}</option>
+      `).join("");
+      els.segmentSelect.value = String(report.selectedIndex);
+      els.segmentMenu.hidden = report.analyses.length < 2;
+      renderComparisonOptions(report);
+    }
+
+    function renderComparisonOptions(report) {
+      const options = ['<option value="">No comparison</option>'].concat(report.analyses.map((analysis, index) => {
+        const disabled = index === report.selectedIndex ? " disabled" : "";
+        return `<option value="${index}"${disabled}>${escapeHtml(analysis.segmentName || `Funnel ${index + 1}`)}</option>`;
+      }));
+
+      els.comparisonSelect.innerHTML = options.join("");
+      els.comparisonSelect.value = report.comparisonIndex >= 0 ? String(report.comparisonIndex) : "";
+      els.comparisonMenu.hidden = report.disableComparison || report.analyses.length < 2;
+    }
+
+    function renderAnalysis(analysis) {
+      activeAnalysis = analysis;
+      const comparison = getActiveComparison();
+      els.emptyState.style.display = "none";
+      els.results.classList.add("is-visible");
+      els.resetApp.disabled = false;
+      setStatus("Analyzed");
+      clearValidation();
+
+      renderMetrics(analysis, comparison);
+      renderVariation(analysis, comparison);
+      renderFunnel(analysis);
+      renderInsights(analysis, comparison);
+      renderMeetingBrief(analysis, comparison);
+      els.summaryText.value = buildExecutiveSummary(analysis, comparison);
+      showToast("Analysis complete");
+    }
+
+    function renderMetrics(analysis, comparison) {
+      const first = analysis.steps[0];
+      const last = analysis.steps[analysis.steps.length - 1];
+      const largest = analysis.largestDrop;
+      const metrics = [
+        {
+          label: "Overall Conversion",
+          value: formatPercent(analysis.overallConversion),
+          note: comparison ? `${formatDeltaPoints(comparison.overallDelta)} vs compare` : `${first.name} to ${last.name}`
+        },
+        {
+          label: "Largest Dropoff",
+          value: largest ? formatPercent(largest.rate) : "0%",
+          note: largest ? `${largest.priorityStep} step` : "No dropoff"
+        },
+        {
+          label: analysis.isIndexed ? "Modeled Dropoff" : "Lost at Priority Step",
+          value: largest ? formatNumber(largest.lost) : "0",
+          note: analysis.isIndexed ? `Per ${formatNumber(analysis.baselineCount)} starts` : "Users or sessions"
+        },
+        {
+          label: "Funnel Health",
+          value: analysis.health.label.split(" ")[0],
+          note: analysis.health.label
+        }
+      ];
+
+      els.metricsGrid.innerHTML = metrics.map(metric => `
+        <article class="metric">
+          <div class="metric-label">${escapeHtml(metric.label)}</div>
+          <div class="metric-value">${escapeHtml(metric.value)}</div>
+          <div class="metric-note">${escapeHtml(metric.note)}</div>
+        </article>
+      `).join("");
+    }
+
+    function renderVariation(analysis, comparison) {
+      if (!comparison) {
+        els.varianceSection.hidden = true;
+        els.varianceSubtitle.textContent = "";
+        els.varianceGrid.innerHTML = "";
+        els.varianceTableWrap.innerHTML = "";
+        return;
+      }
+
+      const movement = comparison.largestMovement;
+      els.varianceSection.hidden = false;
+      els.varianceSubtitle.textContent = `${analysis.segmentName || "Current view"} compared with ${comparison.label}.`;
+
+      const cards = [
+        {
+          label: "Overall Conversion",
+          value: formatDeltaPoints(comparison.overallDelta),
+          note: `${formatPercent(analysis.overallConversion)} vs ${formatPercent(comparison.baseline.overallConversion)}`,
+          tone: comparison.overallDelta
+        },
+        {
+          label: "Biggest Step Movement",
+          value: movement ? formatDeltaPoints(movement.delta) : "0 pp",
+          note: movement ? movement.step : "No comparable step",
+          tone: movement ? movement.delta : 0
+        },
+        {
+          label: "Entry Volume",
+          value: comparison.periodsDiffer ? formatNumber(analysis.steps[0].count) : formatRelativeDelta(comparison.entryRelativeDelta),
+          note: comparison.periodsDiffer ? `Current ${analysis.unitLabel}; baseline ${formatNumber(comparison.baseline.steps[0].count)}` : `${formatSignedNumber(comparison.entryDelta)} ${analysis.unitLabel}`,
+          tone: comparison.periodsDiffer ? 0 : comparison.entryRelativeDelta || 0
+        },
+        {
+          label: "Completion Volume",
+          value: comparison.periodsDiffer ? formatNumber(analysis.steps[analysis.steps.length - 1].count) : formatRelativeDelta(comparison.completionRelativeDelta),
+          note: comparison.periodsDiffer ? `Current ${analysis.unitLabel}; baseline ${formatNumber(comparison.baseline.steps[comparison.baseline.steps.length - 1].count)}` : `${formatSignedNumber(comparison.completionDelta)} ${analysis.unitLabel}`,
+          tone: comparison.periodsDiffer ? 0 : comparison.completionRelativeDelta || 0
+        }
+      ];
+
+      els.varianceGrid.innerHTML = cards.map(card => `
+        <article class="variance-card">
+          <span>${escapeHtml(card.label)}</span>
+          <strong class="${deltaClass(card.tone)}">${escapeHtml(card.value)}</strong>
+          <span>${escapeHtml(card.note)}</span>
+        </article>
+      `).join("");
+
+      const rows = comparison.stepRows.map(row => `
+        <tr>
+          <td>${escapeHtml(row.step)}</td>
+          <td>${formatPercent(row.currentRate)}</td>
+          <td>${formatPercent(row.baselineRate)}</td>
+          <td class="${deltaClass(row.delta)}">${formatDeltaPoints(row.delta)}</td>
+          <td>${formatSignedNumber(row.countDelta)}</td>
+        </tr>
+      `).join("");
+
+      els.varianceTableWrap.innerHTML = `
+        <table class="variance-table">
+          <thead>
+            <tr>
+              <th>Step</th>
+              <th>Current Step Conv.</th>
+              <th>Compare Step Conv.</th>
+              <th>Delta</th>
+              <th>Volume Delta</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+    }
+
+    function renderMeetingBrief(analysis, comparison) {
+      const brief = buildMeetingBrief(analysis, comparison);
+      els.meetingPanel.hidden = false;
+      els.meetingSubtitle.textContent = comparison
+        ? `${analysis.segmentName || "Current view"} vs ${comparison.label}`
+        : analysis.segmentName || "Current funnel";
+      els.meetingBrief.innerHTML = brief.map(item => `
+        <article class="brief-card">
+          <strong>${escapeHtml(item.title)}</strong>
+          <span>${escapeHtml(item.body)}</span>
+        </article>
+      `).join("");
+    }
+
+    function renderFunnel(analysis) {
+      const max = Math.max(...analysis.steps.map(step => step.count));
+      els.funnelSubtitle.textContent = analysis.isIndexed
+        ? `${analysis.steps.length} steps from ${analysis.steps[0].name} to ${analysis.steps[analysis.steps.length - 1].name}; indexed from ${formatNumber(analysis.baselineCount)} starts.`
+        : `${analysis.steps.length} steps from ${analysis.steps[0].name} to ${analysis.steps[analysis.steps.length - 1].name}.`;
+
+      const html = [];
+      analysis.steps.forEach((step, index) => {
+        const width = Math.max(5, (step.count / max) * 100);
+        const countText = analysis.isIndexed ? `${formatNumber(step.count)} modeled` : formatNumber(step.count);
+        html.push(`
+          <div class="funnel-row">
+            <div class="step-name">
+              <strong>${escapeHtml(step.name)}</strong>
+              <span>${escapeHtml(countText)}</span>
+            </div>
+            <div class="bar-track" aria-label="${escapeHtml(step.name)} count ${escapeHtml(countText)}">
+              <div class="bar-fill" style="width: ${width}%"></div>
+              <div class="bar-value">${escapeHtml(countText)}</div>
+            </div>
+            <div class="step-conversion">
+              ${formatPercent(step.conversionFromStart)}
+              <span>from start</span>
+            </div>
+          </div>
+        `);
+
+        if (index < analysis.steps.length - 1) {
+          const drop = analysis.dropoffs[index];
+          html.push(`
+            <div class="drop-row">
+              <span></span>
+              <span class="drop-line"></span>
+              <strong>${formatPercent(drop.rate)} drop</strong>
+            </div>
+          `);
+        }
+      });
+
+      els.funnelList.innerHTML = html.join("");
+    }
+
+    function renderInsights(analysis, comparison) {
+      els.healthLabel.textContent = analysis.health.label;
+      const insights = analysis.insights.slice();
+      if (comparison) {
+        insights.unshift(`Compared with ${comparison.label}, overall conversion changed ${formatDeltaPoints(comparison.overallDelta)} and ${comparison.largestMovement ? comparison.largestMovement.step : analysis.largestDrop.priorityStep} is the biggest movement to explain.`);
+      }
+
+      els.insightsList.innerHTML = insights.map((insight, index) => `
+        <li>
+          <span class="insight-index">${index + 1}</span>
+          <span>${escapeHtml(insight)}</span>
+        </li>
+      `).join("");
+
+      els.recommendations.innerHTML = analysis.recommendations.map(rec => `
+        <div class="recommendation">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3v18M5 10h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span>${escapeHtml(rec)}</span>
+        </div>
+      `).join("");
+    }
+
+    function copySummary() {
+      const text = els.summaryText.value;
+      if (!text.trim()) {
+        showToast("No summary to copy");
+        return;
+      }
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text)
+          .then(() => showToast("Summary copied"))
+          .catch(() => fallbackCopy(text));
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text) {
+      els.summaryText.focus();
+      els.summaryText.select();
+      try {
+        document.execCommand("copy");
+        showToast("Summary copied");
+      } catch (error) {
+        showToast("Copy failed");
+      }
+      window.getSelection().removeAllRanges();
+    }
+
+    function downloadSummaryPdf() {
+      if (!activeAnalysis) {
+        showToast("Run an analysis first");
+        return;
+      }
+
+      const pdfBytes = createPdf(els.summaryText.value);
+      const blob = new Blob([pdfBytes], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = "checkout-funnel-summary.pdf";
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+      showToast("PDF downloaded");
+    }
+
+    function createPdf(text) {
+      const pageWidth = 612;
+      const pageHeight = 792;
+      const margin = 54;
+      const fontSize = 11;
+      const lineHeight = 16;
+      const maxChars = 86;
+      const lines = [];
+
+      text.split("\n").forEach(rawLine => {
+        if (!rawLine.trim()) {
+          lines.push("");
+          return;
+        }
+        wrapLine(rawLine, maxChars).forEach(line => lines.push(line));
+      });
+
+      const maxLinesPerPage = Math.floor((pageHeight - margin * 2) / lineHeight);
+      const pages = [];
+      for (let i = 0; i < lines.length; i += maxLinesPerPage) {
+        pages.push(lines.slice(i, i + maxLinesPerPage));
+      }
+
+      const objects = [];
+      const addObject = content => {
+        objects.push(content);
+        return objects.length;
+      };
+
+      const catalogId = addObject("<< /Type /Catalog /Pages 2 0 R >>");
+      const pagesId = addObject("");
+      const fontId = addObject("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>");
+      const pageIds = [];
+
+      pages.forEach(pageLines => {
+        const stream = buildPdfTextStream(pageLines, margin, pageHeight - margin, fontSize, lineHeight);
+        const contentId = addObject(`<< /Length ${byteLength(stream)} >>\nstream\n${stream}\nendstream`);
+        const pageId = addObject(`<< /Type /Page /Parent ${pagesId} 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /Font << /F1 ${fontId} 0 R >> >> /Contents ${contentId} 0 R >>`);
+        pageIds.push(pageId);
+      });
+
+      objects[pagesId - 1] = `<< /Type /Pages /Kids [${pageIds.map(id => `${id} 0 R`).join(" ")}] /Count ${pageIds.length} >>`;
+
+      let pdf = "%PDF-1.4\n";
+      const offsets = [0];
+      objects.forEach((content, index) => {
+        offsets.push(byteLength(pdf));
+        pdf += `${index + 1} 0 obj\n${content}\nendobj\n`;
+      });
+
+      const xrefOffset = byteLength(pdf);
+      pdf += `xref\n0 ${objects.length + 1}\n`;
+      pdf += "0000000000 65535 f \n";
+      offsets.slice(1).forEach(offset => {
+        pdf += `${String(offset).padStart(10, "0")} 00000 n \n`;
+      });
+      pdf += `trailer\n<< /Size ${objects.length + 1} /Root ${catalogId} 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+
+      return new TextEncoder().encode(pdf);
+    }
+
+    function buildPdfTextStream(lines, x, y, fontSize, lineHeight) {
+      const commands = ["BT", `/F1 ${fontSize} Tf`, `${x} ${y} Td`];
+      lines.forEach((line, index) => {
+        if (index > 0) {
+          commands.push(`0 -${lineHeight} Td`);
+        }
+        commands.push(`(${escapePdf(line)}) Tj`);
+      });
+      commands.push("ET");
+      return commands.join("\n");
+    }
+
+    function wrapLine(line, maxChars) {
+      const words = line.split(/\s+/);
+      const wrapped = [];
+      let current = "";
+
+      words.forEach(word => {
+        if (!current) {
+          current = word;
+        } else if ((current + " " + word).length <= maxChars) {
+          current += " " + word;
+        } else {
+          wrapped.push(current);
+          current = word;
+        }
+      });
+
+      if (current) {
+        wrapped.push(current);
+      }
+      return wrapped;
+    }
+
+    function byteLength(value) {
+      return new TextEncoder().encode(value).length;
+    }
+
+    function escapePdf(value) {
+      return String(value)
+        .replace(/[^\x20-\x7E]/g, "")
+        .replace(/\\/g, "\\\\")
+        .replace(/\(/g, "\\(")
+        .replace(/\)/g, "\\)");
+    }
+
+    function parseCount(value) {
+      const cleaned = String(value || "").replace(/[$,%\s]/g, "").replace(/,/g, "");
+      if (!cleaned) {
+        return NaN;
+      }
+      return Number(cleaned);
+    }
+
+    function findHeader(headers, candidates) {
+      return headers.findIndex(header => candidates.includes(header));
+    }
+
+    function cleanHeader(value) {
+      return String(value || "").trim().toLowerCase().replace(/\s+/g, " ");
+    }
+
+    function formatPercent(value) {
+      return `${Math.round(value * 1000) / 10}%`;
+    }
+
+    function formatDeltaPoints(value) {
+      const points = Math.round(value * 1000) / 10;
+      const prefix = points > 0 ? "+" : "";
+      return `${prefix}${points} pp`;
+    }
+
+    function formatDeltaOrNm(value) {
+      if (!Number.isFinite(value)) {
+        return "n/m";
+      }
+      return formatDeltaPoints(value);
+    }
+
+    function firstSentence(value) {
+      const cleaned = String(value || "").trim();
+      if (!cleaned) {
+        return "";
+      }
+
+      const match = cleaned.match(/^(.+?[.!?])\s/);
+      return (match ? match[1] : cleaned).slice(0, 260);
+    }
+
+    function buildNarrativeSummaryLines(narrative, pdfMetrics) {
+      if (!narrative && !pdfMetrics) {
+        return [];
+      }
+
+      const lines = ["", "Narrative Context"];
+      if (narrative && narrative.summary) {
+        lines.push(`Summary: ${firstSentence(narrative.summary)}`);
+      }
+      if (pdfMetrics) {
+        lines.push(`Metric movement: Cart to Checkout ${formatDeltaOrNm(pdfMetrics.cartToCheckout.wow)} WoW / ${formatDeltaOrNm(pdfMetrics.cartToCheckout.yoy)} YoY; Checkout to Order ${formatDeltaOrNm(pdfMetrics.checkoutToOrder.wow)} WoW / ${formatDeltaOrNm(pdfMetrics.checkoutToOrder.yoy)} YoY.`);
+      }
+      if (narrative && narrative.confirmed) {
+        lines.push(`Confirmed: ${firstSentence(narrative.confirmed)}`);
+      }
+      if (narrative && narrative.open) {
+        lines.push(`Open: ${firstSentence(narrative.open)}`);
+      }
+
+      return lines;
+    }
+
+    function formatRelativeDelta(value) {
+      if (!Number.isFinite(value)) {
+        return "n/a";
+      }
+      const percent = Math.round(value * 1000) / 10;
+      const prefix = percent > 0 ? "+" : "";
+      return `${prefix}${percent}%`;
+    }
+
+    function formatSignedNumber(value) {
+      const rounded = Math.round(value);
+      const prefix = rounded > 0 ? "+" : "";
+      return `${prefix}${formatNumber(rounded)}`;
+    }
+
+    function deltaClass(value) {
+      if (value > 0.0005) {
+        return "delta-positive";
+      }
+      if (value < -0.0005) {
+        return "delta-negative";
+      }
+      return "delta-neutral";
+    }
+
+    function formatNumber(value) {
+      return new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(value);
+    }
+
+    function formatBytes(bytes) {
+      if (bytes < 1024) {
+        return `${bytes} B`;
+      }
+      if (bytes < 1024 * 1024) {
+        return `${(bytes / 1024).toFixed(1)} KB`;
+      }
+      return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function setFileMeta(name, detail) {
+      els.fileMeta.innerHTML = `<span>${escapeHtml(name)}</span><span>${escapeHtml(detail)}</span>`;
+    }
+
+    function setProcessing(isProcessing) {
+      els.processing.classList.toggle("is-visible", isProcessing);
+    }
+
+    function setStatus(label) {
+      els.statusPill.lastChild.nodeValue = label;
+    }
+
+    function showValidation(message) {
+      els.validation.textContent = message;
+      els.validation.classList.add("is-visible");
+      setProcessing(false);
+    }
+
+    function clearValidation() {
+      els.validation.textContent = "";
+      els.validation.classList.remove("is-visible");
+    }
+
+    function showToast(message) {
+      window.clearTimeout(toastTimer);
+      els.toast.textContent = message;
+      els.toast.classList.add("is-visible");
+      toastTimer = window.setTimeout(() => {
+        els.toast.classList.remove("is-visible");
+      }, 2200);
+    }
+
+    function resetApp() {
+      activeAnalysis = null;
+      activeReport = null;
+      els.csvInput.value = "";
+      els.results.classList.remove("is-visible");
+      els.emptyState.style.display = "grid";
+      els.summaryText.value = "";
+      els.sourceStrip.hidden = true;
+      els.sourceFormat.textContent = "Detected format";
+      els.sourceNote.textContent = "";
+      els.segmentMenu.hidden = true;
+      els.segmentSelect.innerHTML = "";
+      els.comparisonMenu.hidden = true;
+      els.comparisonSelect.innerHTML = "";
+      els.varianceSection.hidden = true;
+      els.varianceSubtitle.textContent = "";
+      els.varianceGrid.innerHTML = "";
+      els.varianceTableWrap.innerHTML = "";
+      els.meetingPanel.hidden = true;
+      els.meetingSubtitle.textContent = "";
+      els.meetingBrief.innerHTML = "";
+      els.metricsGrid.innerHTML = "";
+      els.funnelList.innerHTML = "";
+      els.insightsList.innerHTML = "";
+      els.recommendations.innerHTML = "";
+      els.funnelSubtitle.textContent = "";
+      els.healthLabel.textContent = "";
+      els.resetApp.disabled = true;
+      setFileMeta("No file selected", ".csv");
+      setStatus("Ready");
+      clearValidation();
+      setProcessing(false);
+      showToast("Reset complete");
+    }
+  </script>
 </body>
 </html>
