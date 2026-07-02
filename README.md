@@ -9,9 +9,10 @@ A browser-only checkout and customer journey funnel analyzer for Product Manager
 - Supports Adobe Analytics Fallout Funnel exports.
 - Supports Augmeta weekly cart and checkout narrative PDFs.
 - Supports simple `Funnel Step,Users` or `Funnel Step,Sessions` CSVs.
+- Displays a report-style visual readout with metric blocks and trend panels.
 - Detects largest dropoff and funnel health.
 - Compares Adobe segment/date-range views against sensible baselines.
-- Produces a weekly-meeting variation readout with executive context, watch items, and open hypotheses.
+- Produces AI-style PM insights with improvement levers, executive context, watch items, and open hypotheses.
 - Generates a copyable executive summary.
 
 ## Running Locally

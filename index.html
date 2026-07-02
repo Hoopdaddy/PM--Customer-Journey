@@ -488,6 +488,189 @@
       min-width: 0;
     }
 
+    .result-block {
+      min-width: 0;
+      display: grid;
+      gap: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 16px;
+    }
+
+    .visual-readout {
+      background: #fff;
+    }
+
+    .metric-readout-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .metric-readout-block {
+      min-width: 0;
+      padding: 18px 20px;
+      border-right: 1px solid #111;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .metric-readout-block:nth-child(2n) {
+      border-right: 0;
+    }
+
+    .metric-readout-block:nth-last-child(-n + 2) {
+      border-bottom: 0;
+    }
+
+    .metric-readout-title {
+      margin: 0 0 12px;
+      color: #111;
+      font-size: 1rem;
+      line-height: 1.25;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .metric-readout-list {
+      display: grid;
+      gap: 5px;
+      margin: 0;
+      padding: 0 0 0 22px;
+      color: #111;
+      font-size: 0.98rem;
+      line-height: 1.35;
+    }
+
+    .metric-readout-list strong {
+      font-weight: 850;
+    }
+
+    .metric-delta {
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .metric-delta.is-positive {
+      color: #009e52;
+    }
+
+    .metric-delta.is-negative {
+      color: #ff1717;
+    }
+
+    .metric-delta.is-neutral {
+      color: var(--muted);
+    }
+
+    .trend-panel-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .trend-panel {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .trend-header {
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 7px 10px;
+      border-bottom: 1px solid var(--line);
+      color: #202728;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .trend-lock {
+      color: #7669e8;
+      font-size: 0.82rem;
+      line-height: 1;
+    }
+
+    .trend-actions {
+      display: flex;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1;
+    }
+
+    .trend-legend {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      padding: 12px 10px 4px;
+      color: var(--muted);
+      font-size: 0.68rem;
+    }
+
+    .trend-key {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .trend-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      background: currentColor;
+      flex: 0 0 auto;
+    }
+
+    .trend-chart {
+      width: 100%;
+      min-height: 170px;
+      padding: 0 10px 10px;
+    }
+
+    .trend-chart svg {
+      width: 100%;
+      height: auto;
+    }
+
+    .trend-axis {
+      color: #dfe4e2;
+      stroke: currentColor;
+      stroke-width: 1;
+    }
+
+    .trend-axis-label {
+      fill: #596763;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .trend-line-primary {
+      fill: none;
+      stroke: #2dc6c7;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .trend-line-secondary {
+      fill: none;
+      stroke: #6b59de;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
     .variance-section[hidden],
     .meeting-panel[hidden] {
       display: none;
@@ -776,6 +959,10 @@
       gap: 14px;
     }
 
+    .insight-readout .summary-panel {
+      margin-top: 4px;
+    }
+
     .summary-text {
       width: 100%;
       min-height: 304px;
@@ -810,6 +997,19 @@
       border: 1px solid #f2cc86;
       color: #653b02;
       line-height: 1.38;
+    }
+
+    .recommendation strong {
+      display: block;
+      margin-bottom: 2px;
+      color: #4f2d00;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .recommendation span {
+      display: block;
     }
 
     .recommendation svg {
@@ -849,7 +1049,8 @@
 
     @media (max-width: 940px) {
       .hero-grid,
-      .content-grid {
+      .content-grid,
+      .trend-panel-grid {
         grid-template-columns: 1fr;
       }
 
@@ -912,6 +1113,25 @@
 
       .segment-menu select {
         width: 100%;
+      }
+
+      .result-block {
+        padding: 14px;
+      }
+
+      .metric-readout-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metric-readout-block,
+      .metric-readout-block:nth-child(2n),
+      .metric-readout-block:nth-last-child(-n + 2) {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .metric-readout-block:last-child {
+        border-bottom: 0;
       }
 
       .variance-grid,
@@ -1012,7 +1232,7 @@
           <div class="section-title">
             <div>
               <h2>Results</h2>
-              <p>Visualization, metrics, insights, and leadership summary.</p>
+              <p>Report-style metric readout and PM improvement guidance.</p>
             </div>
           </div>
           <span class="status-pill" id="statusPill"><span class="status-dot"></span>Ready</span>
@@ -1045,18 +1265,30 @@
               </label>
             </div>
           </div>
-          <div class="metrics-grid" id="metricsGrid"></div>
-          <section class="analysis-section variance-section" id="varianceSection" aria-labelledby="varianceHeading" hidden>
+
+          <section class="result-block visual-readout" aria-labelledby="visualReadoutHeading">
             <div class="section-title">
               <div>
-                <h3 id="varianceHeading">Variation Analysis</h3>
-                <p id="varianceSubtitle"></p>
+                <h3 id="visualReadoutHeading">Visual Readout</h3>
+                <p id="visualReadoutSubtitle">Metric blocks and trend panels from the uploaded file.</p>
               </div>
             </div>
-            <div class="variance-grid" id="varianceGrid"></div>
-            <div class="variance-table-wrap" id="varianceTableWrap"></div>
-          </section>
-          <div class="content-grid">
+
+            <div class="metric-readout-grid" id="metricReadout"></div>
+            <div class="trend-panel-grid" id="trendPanels"></div>
+            <div class="metrics-grid" id="metricsGrid"></div>
+
+            <section class="analysis-section variance-section" id="varianceSection" aria-labelledby="varianceHeading" hidden>
+              <div class="section-title">
+                <div>
+                  <h3 id="varianceHeading">Variation Analysis</h3>
+                  <p id="varianceSubtitle"></p>
+                </div>
+              </div>
+              <div class="variance-grid" id="varianceGrid"></div>
+              <div class="variance-table-wrap" id="varianceTableWrap"></div>
+            </section>
+
             <section class="analysis-section" aria-labelledby="funnelHeading">
               <div class="section-title">
                 <div>
@@ -1066,54 +1298,55 @@
               </div>
               <div class="funnel-list" id="funnelList"></div>
             </section>
-
-            <section class="analysis-section" aria-labelledby="insightHeading">
-              <div class="section-title">
-                <div>
-                  <h3 id="insightHeading">AI Insights</h3>
-                  <p id="healthLabel"></p>
-                </div>
-              </div>
-              <ul class="insights-list" id="insightsList"></ul>
-              <div class="recommendations" id="recommendations"></div>
-            </section>
-          </div>
-
-          <section class="summary-panel meeting-panel" id="meetingPanel" aria-labelledby="meetingHeading" hidden>
-            <div class="section-title">
-              <div>
-                <h3 id="meetingHeading">Weekly Meeting Brief</h3>
-                <p id="meetingSubtitle"></p>
-              </div>
-            </div>
-            <div class="brief-grid" id="meetingBrief"></div>
           </section>
 
-          <section class="summary-panel" aria-labelledby="summaryHeading">
+          <section class="result-block insight-readout" aria-labelledby="insightHeading">
             <div class="section-title">
               <div>
-                <h3 id="summaryHeading">Executive Summary</h3>
-                <p>Presentation-ready narrative.</p>
+                <h3 id="insightHeading">AI Insights</h3>
+                <p id="healthLabel"></p>
               </div>
             </div>
-            <textarea class="summary-text" id="summaryText" aria-label="Executive summary"></textarea>
-            <div class="summary-actions">
-              <button class="primary-btn" type="button" id="copySummary">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="2"/>
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-                Copy Summary
-              </button>
-              <button class="secondary-btn" type="button" id="downloadPdf">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="m7 10 5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-                Download PDF
-              </button>
-            </div>
+
+            <ul class="insights-list" id="insightsList"></ul>
+            <div class="recommendations" id="recommendations"></div>
+
+            <section class="summary-panel meeting-panel" id="meetingPanel" aria-labelledby="meetingHeading" hidden>
+              <div class="section-title">
+                <div>
+                  <h3 id="meetingHeading">Weekly Meeting Brief</h3>
+                  <p id="meetingSubtitle"></p>
+                </div>
+              </div>
+              <div class="brief-grid" id="meetingBrief"></div>
+            </section>
+
+            <section class="summary-panel" aria-labelledby="summaryHeading">
+              <div class="section-title">
+                <div>
+                  <h3 id="summaryHeading">Executive Summary</h3>
+                  <p>Presentation-ready narrative.</p>
+                </div>
+              </div>
+              <textarea class="summary-text" id="summaryText" aria-label="Executive summary"></textarea>
+              <div class="summary-actions">
+                <button class="primary-btn" type="button" id="copySummary">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="2"/>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                  Copy Summary
+                </button>
+                <button class="secondary-btn" type="button" id="downloadPdf">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="m7 10 5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                  Download PDF
+                </button>
+              </div>
+            </section>
           </section>
         </div>
       </div>
@@ -1140,6 +1373,9 @@
       segmentSelect: document.querySelector("#segmentSelect"),
       comparisonMenu: document.querySelector("#comparisonMenu"),
       comparisonSelect: document.querySelector("#comparisonSelect"),
+      visualReadoutSubtitle: document.querySelector("#visualReadoutSubtitle"),
+      metricReadout: document.querySelector("#metricReadout"),
+      trendPanels: document.querySelector("#trendPanels"),
       metricsGrid: document.querySelector("#metricsGrid"),
       varianceSection: document.querySelector("#varianceSection"),
       varianceSubtitle: document.querySelector("#varianceSubtitle"),
@@ -2332,6 +2568,7 @@
       setStatus("Analyzed");
       clearValidation();
 
+      renderVisualReadout(analysis, comparison);
       renderMetrics(analysis, comparison);
       renderVariation(analysis, comparison);
       renderFunnel(analysis);
@@ -2375,6 +2612,379 @@
           <div class="metric-note">${escapeHtml(metric.note)}</div>
         </article>
       `).join("");
+    }
+
+    function renderVisualReadout(analysis, comparison) {
+      const report = activeReport || { analyses: [analysis] };
+      const readoutBlocks = buildMetricReadoutBlocks(report, analysis);
+      const trendPanels = buildTrendPanels(report, analysis);
+
+      els.visualReadoutSubtitle.textContent = `${analysis.segmentName || "Current view"} translated into the report format used in weekly readouts.`;
+      els.metricReadout.innerHTML = readoutBlocks.map(block => `
+        <article class="metric-readout-block">
+          <h4 class="metric-readout-title">${escapeHtml(block.title)}</h4>
+          <ul class="metric-readout-list">
+            ${block.rows.map(row => `
+              <li>
+                <strong>${escapeHtml(row.label)}:</strong>
+                ${escapeHtml(row.value)}
+                ${renderMetricDelta(row.delta, row.suffix)}
+              </li>
+            `).join("")}
+          </ul>
+        </article>
+      `).join("");
+
+      els.trendPanels.innerHTML = trendPanels.map(renderTrendPanel).join("");
+    }
+
+    function buildMetricReadoutBlocks(report, selectedAnalysis) {
+      const grouped = groupAnalysesBySegment(report.analyses);
+      const selectedGroup = displaySegmentGroup(selectedAnalysis);
+      const preferred = ["Overall", "Desktop", "Web Only", "Mobile Web"];
+      const available = Array.from(grouped.keys());
+      const ordered = preferred.filter(key => grouped.has(key));
+      if (!ordered.includes(selectedGroup) && grouped.has(selectedGroup)) {
+        ordered.push(selectedGroup);
+      }
+      available.forEach(key => {
+        if (!ordered.includes(key)) {
+          ordered.push(key);
+        }
+      });
+
+      return ordered.slice(0, 4).map(groupName => {
+        const analyses = grouped.get(groupName) || [selectedAnalysis];
+        const anchor = analyses[0] || selectedAnalysis;
+        const primaryMetric = getPrimaryMetric(anchor);
+        return {
+          title: `${groupName} ${primaryMetric.label}`,
+          rows: buildReadoutRows(report, analyses, anchor)
+        };
+      });
+    }
+
+    function buildReadoutRows(report, analyses, anchor) {
+      if (anchor.pdfMetrics && anchor.pdfMetrics.cartToCheckout) {
+        return buildPdfReadoutRows(anchor);
+      }
+
+      const sorted = sortAnalysesForReadout(analyses).slice(0, 3);
+      const rows = sorted.map((analysis, index) => {
+        const metric = getPrimaryMetric(analysis);
+        const baseline = findReadoutBaseline(report, analysis);
+        const baselineMetric = baseline ? getPrimaryMetric(baseline) : null;
+        return {
+          label: readoutPeriodLabel(analysis, index),
+          value: formatPercent(metric.rate),
+          delta: baselineMetric ? metric.rate - baselineMetric.rate : null,
+          suffix: baseline ? readoutDeltaSuffix(analysis, baseline) : ""
+        };
+      });
+
+      const filler = buildReadoutFallbackRows(anchor);
+      while (rows.length < 3 && filler.length) {
+        rows.push(filler.shift());
+      }
+      return rows.slice(0, 3);
+    }
+
+    function buildPdfReadoutRows(analysis) {
+      const movement = analysis.pdfMetrics.cartToCheckout;
+      const current = movement.w25;
+      return [
+        {
+          label: "LW",
+          value: formatPercent(current),
+          delta: movement.yoy,
+          suffix: "YoY"
+        },
+        {
+          label: "PW",
+          value: formatPercent(clampRate(current - movement.wow)),
+          delta: movement.wow,
+          suffix: "WoW"
+        },
+        {
+          label: "8-wk",
+          value: formatPercent(clampRate(current - movement.trail)),
+          delta: movement.trail,
+          suffix: "vs LW"
+        }
+      ];
+    }
+
+    function buildReadoutFallbackRows(analysis) {
+      const largest = analysis.largestDrop;
+      return [
+        {
+          label: "Conv",
+          value: formatPercent(analysis.overallConversion),
+          delta: null,
+          suffix: ""
+        },
+        {
+          label: "Drop",
+          value: largest ? formatPercent(largest.rate) : "0%",
+          delta: null,
+          suffix: ""
+        }
+      ];
+    }
+
+    function renderMetricDelta(delta, suffix) {
+      if (!Number.isFinite(delta)) {
+        return "";
+      }
+      const tone = delta > 0.0005 ? "is-positive" : delta < -0.0005 ? "is-negative" : "is-neutral";
+      const label = suffix ? ` ${suffix}` : "";
+      return `<span class="metric-delta ${tone}">(${formatRelativeDelta(delta)}${escapeHtml(label)})</span>`;
+    }
+
+    function buildTrendPanels(report, selectedAnalysis) {
+      const grouped = groupAnalysesBySegment(report.analyses);
+      const selectedGroup = displaySegmentGroup(selectedAnalysis);
+      const panelGroups = [];
+
+      if (grouped.has("Overall")) {
+        panelGroups.push("Overall");
+      }
+      if (!panelGroups.includes(selectedGroup) && grouped.has(selectedGroup)) {
+        panelGroups.push(selectedGroup);
+      }
+      ["Web Only", "Mobile Web", "Desktop"].forEach(group => {
+        if (panelGroups.length < 2 && grouped.has(group) && !panelGroups.includes(group)) {
+          panelGroups.push(group);
+        }
+      });
+
+      if (!panelGroups.length) {
+        panelGroups.push(selectedGroup);
+      }
+
+      return panelGroups.slice(0, 2).map(groupName => {
+        const analyses = grouped.get(groupName) || [selectedAnalysis];
+        const anchor = analyses[0] || selectedAnalysis;
+        const primaryMetric = getPrimaryMetric(anchor);
+        const trend = buildTrendSeries(analyses, anchor);
+        return {
+          title: `${primaryMetric.label} - ${groupName}`,
+          primaryLabel: primaryMetric.label,
+          secondaryLabel: getSecondaryMetricLabel(anchor),
+          labels: trend.labels,
+          primary: trend.primary,
+          secondary: trend.secondary
+        };
+      });
+    }
+
+    function buildTrendSeries(analyses, anchor) {
+      if (anchor.pdfMetrics && anchor.pdfMetrics.cartToCheckout) {
+        const checkoutStart = anchor.pdfMetrics.cartToCheckout;
+        const checkoutOrder = anchor.pdfMetrics.checkoutToOrder || null;
+        return {
+          labels: ["LY", "8-wk", "PW", "LW"],
+          primary: [
+            clampRate(checkoutStart.w25 - checkoutStart.yoy),
+            clampRate(checkoutStart.w25 - checkoutStart.trail),
+            clampRate(checkoutStart.w25 - checkoutStart.wow),
+            clampRate(checkoutStart.w25)
+          ],
+          secondary: checkoutOrder ? [
+            clampRate(checkoutOrder.w25 - checkoutOrder.yoy),
+            clampRate(checkoutOrder.w25 - checkoutOrder.trail),
+            clampRate(checkoutOrder.w25 - checkoutOrder.wow),
+            clampRate(checkoutOrder.w25)
+          ] : buildFallbackTrend(anchor.overallConversion)
+        };
+      }
+
+      const sorted = sortAnalysesForReadout(analyses);
+      if (sorted.length >= 2) {
+        return {
+          labels: sorted.map((analysis, index) => readoutPeriodLabel(analysis, index)),
+          primary: sorted.map(analysis => getPrimaryMetric(analysis).rate),
+          secondary: sorted.map(analysis => analysis.overallConversion)
+        };
+      }
+
+      const primary = getPrimaryMetric(anchor).rate;
+      return {
+        labels: ["P1", "P2", "P3", "Now"],
+        primary: buildFallbackTrend(primary),
+        secondary: buildFallbackTrend(anchor.overallConversion).reverse()
+      };
+    }
+
+    function renderTrendPanel(panel) {
+      return `
+        <article class="trend-panel">
+          <div class="trend-header">
+            <span><span class="trend-lock" aria-hidden="true">▣</span> ${escapeHtml(panel.title)}</span>
+            <span class="trend-actions" aria-hidden="true">⚙ ˅ ×</span>
+          </div>
+          <div class="trend-legend">
+            <span class="trend-key" style="color:#2dc6c7"><span class="trend-swatch"></span>${escapeHtml(panel.primaryLabel)}</span>
+            <span class="trend-key" style="color:#6b59de"><span class="trend-swatch"></span>${escapeHtml(panel.secondaryLabel)}</span>
+          </div>
+          <div class="trend-chart">${renderTrendSvg(panel.primary, panel.secondary, panel.labels)}</div>
+        </article>
+      `;
+    }
+
+    function renderTrendSvg(primary, secondary, labels) {
+      const width = 360;
+      const height = 170;
+      const left = 36;
+      const right = 12;
+      const top = 12;
+      const bottom = 28;
+      const plotWidth = width - left - right;
+      const plotHeight = height - top - bottom;
+      const values = primary.concat(secondary).filter(Number.isFinite);
+      let min = Math.min(...values);
+      let max = Math.max(...values);
+      if (!Number.isFinite(min) || !Number.isFinite(max)) {
+        min = 0;
+        max = 1;
+      }
+      const spread = Math.max(0.04, max - min);
+      min = clampRate(min - spread * 0.35);
+      max = clampRate(max + spread * 0.35);
+      if (max - min < 0.05) {
+        min = clampRate(min - 0.025);
+        max = clampRate(max + 0.025);
+      }
+
+      const xFor = index => left + (plotWidth * index) / Math.max(1, primary.length - 1);
+      const yFor = value => top + (max - value) / Math.max(0.001, max - min) * plotHeight;
+      const pathFor = series => series.map((value, index) => `${index ? "L" : "M"} ${xFor(index).toFixed(1)} ${yFor(value).toFixed(1)}`).join(" ");
+      const ticks = [max, (max + min) / 2, min];
+      const labelIndexes = [0, Math.floor((labels.length - 1) / 2), labels.length - 1].filter((value, index, array) => array.indexOf(value) === index);
+
+      return `
+        <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeHtml(labels.join(", "))} trend">
+          ${ticks.map(tick => `
+            <line class="trend-axis" x1="${left}" y1="${yFor(tick).toFixed(1)}" x2="${width - right}" y2="${yFor(tick).toFixed(1)}"></line>
+            <text class="trend-axis-label" x="4" y="${(yFor(tick) + 4).toFixed(1)}">${escapeHtml(formatPercent(tick))}</text>
+          `).join("")}
+          <path class="trend-line-primary" d="${pathFor(primary)}"></path>
+          <path class="trend-line-secondary" d="${pathFor(secondary)}"></path>
+          ${labelIndexes.map(index => `
+            <text class="trend-axis-label" x="${xFor(index).toFixed(1)}" y="${height - 8}" text-anchor="middle">${escapeHtml(labels[index])}</text>
+          `).join("")}
+        </svg>
+      `;
+    }
+
+    function groupAnalysesBySegment(analyses) {
+      return analyses.reduce((map, analysis) => {
+        const key = displaySegmentGroup(analysis);
+        if (!map.has(key)) {
+          map.set(key, []);
+        }
+        map.get(key).push(analysis);
+        return map;
+      }, new Map());
+    }
+
+    function displaySegmentGroup(analysis) {
+      const raw = analysis.segmentGroup || analysis.segmentName || "Overall";
+      return String(raw).replace(/\s+-\s+.*$/, "").trim() || "Overall";
+    }
+
+    function getPrimaryMetric(analysis) {
+      if (analysis.pdfMetrics && analysis.pdfMetrics.cartToCheckout) {
+        return {
+          label: "Checkout Started %",
+          rate: analysis.pdfMetrics.cartToCheckout.w25
+        };
+      }
+
+      const targetStep = analysis.steps.find(step => /checkout started|checkout/i.test(step.name)) || analysis.steps[1] || analysis.steps[analysis.steps.length - 1];
+      const label = targetStep && targetStep.name ? `${targetStep.name} %` : "Conversion %";
+      const rate = targetStep ? targetStep.conversionFromPrevious : analysis.overallConversion;
+      return {
+        label,
+        rate: Number.isFinite(rate) ? rate : analysis.overallConversion
+      };
+    }
+
+    function getSecondaryMetricLabel(analysis) {
+      if (analysis.pdfMetrics && analysis.pdfMetrics.checkoutToOrder) {
+        return "Checkout to Order";
+      }
+      return "Overall Conv.";
+    }
+
+    function findReadoutBaseline(report, analysis) {
+      const sameGroup = report.analyses.filter(candidate => candidate !== analysis && displaySegmentGroup(candidate) === displaySegmentGroup(analysis));
+      if (!sameGroup.length) {
+        return null;
+      }
+
+      const period = cleanHeader(analysis.periodName || analysis.segmentName || "");
+      if (period.includes("ytd") && !period.includes("ly")) {
+        return sameGroup.find(candidate => cleanHeader(candidate.periodName || candidate.segmentName || "").includes("ytd ly")) || sameGroup[0];
+      }
+      if (period.includes("last 7") || period.includes("7 full") || period.includes("lw")) {
+        return sameGroup.find(candidate => cleanHeader(candidate.periodName || candidate.segmentName || "").includes("last 30")) || sameGroup[0];
+      }
+      if (period.includes("qtd")) {
+        return sameGroup.find(candidate => cleanHeader(candidate.periodName || candidate.segmentName || "").includes("qtd ly")) || sameGroup[0];
+      }
+      return sameGroup[0];
+    }
+
+    function readoutDeltaSuffix(analysis, baseline) {
+      const baselinePeriod = cleanHeader(baseline.periodName || baseline.segmentName || "");
+      if (baselinePeriod.includes("ly") || baselinePeriod.includes("yoy")) {
+        return "YoY";
+      }
+      return "vs compare";
+    }
+
+    function sortAnalysesForReadout(analyses) {
+      return analyses.slice().sort((a, b) => readoutRank(a) - readoutRank(b));
+    }
+
+    function readoutRank(analysis) {
+      const period = cleanHeader(analysis.periodName || analysis.segmentName || "");
+      if (period.includes("last 7") || period.includes("7 full") || period.includes("lw") || /w\d+/.test(period)) return 0;
+      if (period.includes("qtd") && !period.includes("ly")) return 1;
+      if (period.includes("last 30") || period.includes("30 full")) return 1;
+      if (period.includes("ytd") && !period.includes("ly")) return 2;
+      if (period.includes("last 90") || period.includes("90 full")) return 3;
+      if (period.includes("ly") || period.includes("yoy")) return 4;
+      return 5;
+    }
+
+    function readoutPeriodLabel(analysis, index) {
+      const period = cleanHeader(analysis.periodName || analysis.segmentName || "");
+      if (period.includes("last 7") || period.includes("7 full") || period.includes("lw") || /w\d+/.test(period)) return "LW";
+      if (period.includes("qtd") && !period.includes("ly")) return "QTD";
+      if (period.includes("ytd") && !period.includes("ly")) return "YTD";
+      if (period.includes("last 30") || period.includes("30 full")) return "L30";
+      if (period.includes("last 90") || period.includes("90 full")) return "L90";
+      if (period.includes("ly")) return "LY";
+      return index === 0 ? "Current" : `View ${index + 1}`;
+    }
+
+    function buildFallbackTrend(rate) {
+      const safe = clampRate(rate);
+      return [
+        clampRate(safe - 0.035),
+        clampRate(safe - 0.012),
+        clampRate(safe - 0.022),
+        safe
+      ];
+    }
+
+    function clampRate(value) {
+      if (!Number.isFinite(value)) {
+        return 0;
+      }
+      return Math.max(0, Math.min(1, value));
     }
 
     function renderVariation(analysis, comparison) {
@@ -2508,11 +3118,9 @@
     }
 
     function renderInsights(analysis, comparison) {
-      els.healthLabel.textContent = analysis.health.label;
-      const insights = analysis.insights.slice();
-      if (comparison) {
-        insights.unshift(`Compared with ${comparison.label}, overall conversion changed ${formatDeltaPoints(comparison.overallDelta)} and ${comparison.largestMovement ? comparison.largestMovement.step : analysis.largestDrop.priorityStep} is the biggest movement to explain.`);
-      }
+      const priorityStep = analysis.largestDrop ? analysis.largestDrop.priorityStep : "the largest dropoff";
+      els.healthLabel.textContent = `${analysis.health.label} · Focus first on ${priorityStep}`;
+      const insights = buildImprovementInsights(analysis, comparison).concat(analysis.insights.slice(0, 3));
 
       els.insightsList.innerHTML = insights.map((insight, index) => `
         <li>
@@ -2521,14 +3129,76 @@
         </li>
       `).join("");
 
-      els.recommendations.innerHTML = analysis.recommendations.map(rec => `
+      els.recommendations.innerHTML = buildActionRecommendations(analysis, comparison).map(rec => `
         <div class="recommendation">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M12 3v18M5 10h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>
-          <span>${escapeHtml(rec)}</span>
+          <span><strong>${escapeHtml(rec.title)}</strong><span>${escapeHtml(rec.body)}</span></span>
         </div>
       `).join("");
+    }
+
+    function buildImprovementInsights(analysis, comparison) {
+      const largest = analysis.largestDrop;
+      const unit = analysis.isIndexed ? "modeled users per 100,000 starts" : analysis.unitLabel;
+      const recoverable = largest ? Math.round(largest.lost * 0.1) : 0;
+      const insights = [];
+
+      if (largest) {
+        insights.push(`Primary improvement lever: reduce ${largest.from} to ${largest.to} abandonment. A 10% reduction in that dropoff is worth about ${formatNumber(recoverable)} ${unit}.`);
+      }
+
+      if (comparison && comparison.largestMovement) {
+        const movement = comparison.largestMovement;
+        insights.push(`Weekly meeting focus: ${movement.step} moved ${formatDeltaPoints(movement.delta)} versus ${comparison.label}, making it the clearest variation to explain.`);
+      } else if (analysis.pdfMetrics && analysis.pdfMetrics.cartToCheckout) {
+        const metric = analysis.pdfMetrics.cartToCheckout;
+        insights.push(`Checkout-start movement is the headline: ${formatRelativeDelta(metric.wow)} WoW, ${formatRelativeDelta(metric.yoy)} YoY, and ${formatRelativeDelta(metric.trail)} versus the trailing baseline.`);
+      }
+
+      if (analysis.narrative && analysis.narrative.summary) {
+        insights.push(`Narrative signal: ${firstSentence(analysis.narrative.summary)}`);
+      }
+
+      if (analysis.narrative && analysis.narrative.open) {
+        insights.push(`Open hypothesis to resolve: ${firstSentence(analysis.narrative.open)}`);
+      }
+
+      return insights.slice(0, 4);
+    }
+
+    function buildActionRecommendations(analysis, comparison) {
+      const largest = analysis.largestDrop;
+      const actions = [];
+
+      if (largest) {
+        actions.push({
+          title: "Improve the largest leak",
+          body: `Start with ${largest.priorityStep}: review friction between ${largest.from} and ${largest.to}, then segment the drop by device, traffic source, and new vs returning customer.`
+        });
+      }
+
+      if (comparison && comparison.largestMovement) {
+        actions.push({
+          title: "Explain the week-over-week change",
+          body: `Use ${comparison.largestMovement.step} as the meeting anchor because it moved ${formatDeltaPoints(comparison.largestMovement.delta)} against ${comparison.label}.`
+        });
+      } else if (analysis.pdfMetrics && analysis.pdfMetrics.checkoutToOrder) {
+        actions.push({
+          title: "Separate handoff from checkout",
+          body: `Cart to checkout is moving ${formatRelativeDelta(analysis.pdfMetrics.cartToCheckout.wow)} WoW while checkout to order is ${formatRelativeDelta(analysis.pdfMetrics.checkoutToOrder.wow)} WoW, so diagnose entry friction separately from checkout completion.`
+        });
+      }
+
+      analysis.recommendations.slice(0, 2).forEach((recommendation, index) => {
+        actions.push({
+          title: index === 0 ? "Next diagnostic" : "Segment before changing UX",
+          body: recommendation
+        });
+      });
+
+      return actions.slice(0, 4);
     }
 
     function copySummary() {
@@ -2844,6 +3514,8 @@
       els.segmentSelect.innerHTML = "";
       els.comparisonMenu.hidden = true;
       els.comparisonSelect.innerHTML = "";
+      els.metricReadout.innerHTML = "";
+      els.trendPanels.innerHTML = "";
       els.varianceSection.hidden = true;
       els.varianceSubtitle.textContent = "";
       els.varianceGrid.innerHTML = "";
@@ -2858,7 +3530,7 @@
       els.funnelSubtitle.textContent = "";
       els.healthLabel.textContent = "";
       els.resetApp.disabled = true;
-      setFileMeta("No file selected", ".csv");
+      setFileMeta("No file selected", ".csv / .pdf");
       setStatus("Ready");
       clearValidation();
       setProcessing(false);
