@@ -963,6 +963,23 @@
       margin-top: 4px;
     }
 
+    .insight-readout[hidden] {
+      display: none;
+    }
+
+    .upload-insights {
+      margin-top: 2px;
+      padding: 14px;
+    }
+
+    .upload-insights .brief-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .upload-insights .summary-text {
+      min-height: 240px;
+    }
+
     .summary-text {
       width: 100%;
       min-height: 304px;
@@ -1225,6 +1242,55 @@
           <span class="spinner" aria-hidden="true"></span>
           <strong>Processing Funnel...</strong>
         </div>
+
+        <section class="result-block insight-readout upload-insights" id="insightPanel" aria-labelledby="insightHeading" hidden>
+          <div class="section-title">
+            <div>
+              <h3 id="insightHeading">AI Insights</h3>
+              <p id="healthLabel"></p>
+            </div>
+          </div>
+
+          <ul class="insights-list" id="insightsList"></ul>
+          <div class="recommendations" id="recommendations"></div>
+
+          <section class="summary-panel meeting-panel" id="meetingPanel" aria-labelledby="meetingHeading" hidden>
+            <div class="section-title">
+              <div>
+                <h3 id="meetingHeading">Weekly Meeting Brief</h3>
+                <p id="meetingSubtitle"></p>
+              </div>
+            </div>
+            <div class="brief-grid" id="meetingBrief"></div>
+          </section>
+
+          <section class="summary-panel" aria-labelledby="summaryHeading">
+            <div class="section-title">
+              <div>
+                <h3 id="summaryHeading">Executive Summary</h3>
+                <p>Presentation-ready narrative.</p>
+              </div>
+            </div>
+            <textarea class="summary-text" id="summaryText" aria-label="Executive summary"></textarea>
+            <div class="summary-actions">
+              <button class="primary-btn" type="button" id="copySummary">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="2"/>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Copy Summary
+              </button>
+              <button class="secondary-btn" type="button" id="downloadPdf">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="m7 10 5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Download PDF
+              </button>
+            </div>
+          </section>
+        </section>
       </div>
 
       <div class="panel preview-panel">
@@ -1300,54 +1366,6 @@
             </section>
           </section>
 
-          <section class="result-block insight-readout" aria-labelledby="insightHeading">
-            <div class="section-title">
-              <div>
-                <h3 id="insightHeading">AI Insights</h3>
-                <p id="healthLabel"></p>
-              </div>
-            </div>
-
-            <ul class="insights-list" id="insightsList"></ul>
-            <div class="recommendations" id="recommendations"></div>
-
-            <section class="summary-panel meeting-panel" id="meetingPanel" aria-labelledby="meetingHeading" hidden>
-              <div class="section-title">
-                <div>
-                  <h3 id="meetingHeading">Weekly Meeting Brief</h3>
-                  <p id="meetingSubtitle"></p>
-                </div>
-              </div>
-              <div class="brief-grid" id="meetingBrief"></div>
-            </section>
-
-            <section class="summary-panel" aria-labelledby="summaryHeading">
-              <div class="section-title">
-                <div>
-                  <h3 id="summaryHeading">Executive Summary</h3>
-                  <p>Presentation-ready narrative.</p>
-                </div>
-              </div>
-              <textarea class="summary-text" id="summaryText" aria-label="Executive summary"></textarea>
-              <div class="summary-actions">
-                <button class="primary-btn" type="button" id="copySummary">
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="2"/>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  </svg>
-                  Copy Summary
-                </button>
-                <button class="secondary-btn" type="button" id="downloadPdf">
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path d="m7 10 5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  </svg>
-                  Download PDF
-                </button>
-              </div>
-            </section>
-          </section>
         </div>
       </div>
     </section>
@@ -1363,6 +1381,7 @@
       fileMeta: document.querySelector("#fileMeta"),
       validation: document.querySelector("#validation"),
       processing: document.querySelector("#processing"),
+      insightPanel: document.querySelector("#insightPanel"),
       statusPill: document.querySelector("#statusPill"),
       emptyState: document.querySelector("#emptyState"),
       results: document.querySelector("#results"),
@@ -2564,6 +2583,7 @@
       const comparison = getActiveComparison();
       els.emptyState.style.display = "none";
       els.results.classList.add("is-visible");
+      els.insightPanel.hidden = false;
       els.resetApp.disabled = false;
       setStatus("Analyzed");
       clearValidation();
@@ -3505,6 +3525,7 @@
       activeReport = null;
       els.csvInput.value = "";
       els.results.classList.remove("is-visible");
+      els.insightPanel.hidden = true;
       els.emptyState.style.display = "grid";
       els.summaryText.value = "";
       els.sourceStrip.hidden = true;
