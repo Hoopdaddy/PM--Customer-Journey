@@ -268,6 +268,100 @@
       font-size: 0.88rem;
     }
 
+    .file-stack {
+      display: grid;
+      gap: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 12px;
+    }
+
+    .file-stack[hidden] {
+      display: none;
+    }
+
+    .file-stack-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--ink);
+      font-size: 0.86rem;
+    }
+
+    .text-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 0 2px;
+      border: 0;
+      background: transparent;
+      color: var(--teal);
+      font-weight: 800;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+
+    .file-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .file-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 30px;
+      gap: 10px;
+      align-items: center;
+      min-height: 46px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfb;
+      padding: 8px 8px 8px 10px;
+    }
+
+    .file-row strong,
+    .file-row span {
+      display: block;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .file-row strong {
+      color: var(--ink);
+      font-size: 0.84rem;
+      line-height: 1.25;
+    }
+
+    .file-row span {
+      color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.25;
+    }
+
+    .remove-file-btn {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .remove-file-btn:hover {
+      color: var(--red);
+      border-color: var(--red-2);
+      background: #fff5f3;
+    }
+
     .validation {
       display: none;
       border-radius: var(--radius);
@@ -1217,7 +1311,7 @@
         </div>
 
         <label class="upload-zone" id="uploadZone">
-          <input id="csvInput" type="file" accept=".csv,.pdf,text/csv,application/pdf">
+          <input id="csvInput" type="file" accept=".csv,.pdf,text/csv,application/pdf" multiple>
           <span class="upload-content">
             <span class="upload-icon" aria-hidden="true">
               <svg width="31" height="31" viewBox="0 0 24 24" fill="none">
@@ -1235,6 +1329,14 @@
           <span>No file selected</span>
           <span>.csv / .pdf</span>
         </div>
+
+        <section class="file-stack" id="fileStack" hidden aria-label="Files in AI analysis">
+          <div class="file-stack-header">
+            <strong>Files in AI analysis</strong>
+            <button class="text-btn" type="button" id="clearFiles">Clear all files</button>
+          </div>
+          <div class="file-list" id="fileList"></div>
+        </section>
 
         <div class="validation" id="validation" role="alert"></div>
 
@@ -1379,6 +1481,9 @@
       csvInput: document.querySelector("#csvInput"),
       uploadZone: document.querySelector("#uploadZone"),
       fileMeta: document.querySelector("#fileMeta"),
+      fileStack: document.querySelector("#fileStack"),
+      fileList: document.querySelector("#fileList"),
+      clearFiles: document.querySelector("#clearFiles"),
       validation: document.querySelector("#validation"),
       processing: document.querySelector("#processing"),
       insightPanel: document.querySelector("#insightPanel"),
@@ -1427,12 +1532,14 @@
 
     let activeAnalysis = null;
     let activeReport = null;
+    let analysisFiles = [];
+    let nextAnalysisFileId = 1;
     let toastTimer = null;
 
     els.csvInput.addEventListener("change", event => {
-      const file = event.target.files && event.target.files[0];
-      if (file) {
-        readFile(file);
+      const files = Array.from(event.target.files || []);
+      if (files.length) {
+        addFiles(files);
       }
     });
 
@@ -1451,18 +1558,25 @@
     });
 
     els.uploadZone.addEventListener("drop", event => {
-      const file = event.dataTransfer.files && event.dataTransfer.files[0];
-      if (file) {
-        readFile(file);
+      const files = Array.from(event.dataTransfer.files || []);
+      if (files.length) {
+        addFiles(files);
       }
     });
 
     els.loadSample.addEventListener("click", () => {
-      setFileMeta("Sample checkout funnel", "5 rows");
       processCsv(sampleCsv, "Sample checkout funnel");
     });
 
     els.resetApp.addEventListener("click", resetApp);
+    els.clearFiles.addEventListener("click", resetApp);
+    els.fileList.addEventListener("click", event => {
+      const button = event.target.closest("[data-remove-file]");
+      if (!button) {
+        return;
+      }
+      removeAnalysisFile(Number(button.dataset.removeFile));
+    });
     els.copySummary.addEventListener("click", copySummary);
     els.downloadPdf.addEventListener("click", downloadSummaryPdf);
     els.segmentSelect.addEventListener("change", () => {
@@ -1484,27 +1598,65 @@
       showToast("Comparison updated");
     });
 
-    function readFile(file) {
+    async function addFiles(files) {
+      clearValidation();
+      setProcessing(true);
+      setStatus("Processing");
+
+      const added = [];
+      const errors = [];
+
+      for (const file of files) {
+        try {
+          const report = await parseUploadedFile(file);
+          added.push(addReportToAnalysis(report, file.name, formatBytes(file.size)));
+        } catch (error) {
+          errors.push(`${file.name}: ${error.message || "Could not be processed."}`);
+        }
+      }
+
+      setProcessing(false);
+      els.csvInput.value = "";
+
+      if (errors.length) {
+        showValidation(errors.join(" "));
+        setStatus(analysisFiles.length ? "Analyzed" : "Ready");
+      } else {
+        clearValidation();
+        setStatus(analysisFiles.length ? "Analyzed" : "Ready");
+      }
+
+      if (added.length) {
+        showToast(`${added.length} file${added.length === 1 ? "" : "s"} added to AI Insights`);
+      }
+    }
+
+    async function parseUploadedFile(file) {
       const lowerName = file.name.toLowerCase();
       const isCsv = lowerName.endsWith(".csv") || file.type === "text/csv";
       const isPdf = lowerName.endsWith(".pdf") || file.type === "application/pdf";
 
       if (!isCsv && !isPdf) {
-        showValidation("Upload a CSV or PDF file.");
-        return;
+        throw new Error("Upload a CSV or PDF file.");
       }
-
-      setFileMeta(file.name, formatBytes(file.size));
 
       if (isPdf) {
-        processPdfFile(file);
-        return;
+        const text = await extractPdfText(file);
+        return normalizePdfNarrative(text, file.name);
       }
 
-      const reader = new FileReader();
-      reader.onload = () => processCsv(String(reader.result || ""), file.name);
-      reader.onerror = () => showValidation("The file could not be read.");
-      reader.readAsText(file);
+      const text = await readTextFile(file);
+      const rows = parseCsv(text);
+      return normalizeImport(rows, file.name);
+    }
+
+    function readTextFile(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result || ""));
+        reader.onerror = () => reject(new Error("The file could not be read."));
+        reader.readAsText(file);
+      });
     }
 
     async function processPdfFile(file) {
@@ -1513,9 +1665,8 @@
       setStatus("Processing");
 
       try {
-        const text = await extractPdfText(file);
-        const report = normalizePdfNarrative(text, file.name);
-        renderReport(report);
+        const report = await parseUploadedFile(file);
+        addReportToAnalysis(report, file.name, formatBytes(file.size));
       } catch (error) {
         showValidation(error.message || "The PDF could not be processed.");
         setStatus("Ready");
@@ -1557,7 +1708,7 @@
         try {
           const rows = parseCsv(text);
           const report = normalizeImport(rows, sourceName);
-          renderReport(report);
+          addReportToAnalysis(report, sourceName, "5 rows");
         } catch (error) {
           showValidation(error.message || "The CSV could not be processed.");
           setStatus("Ready");
@@ -2548,6 +2699,88 @@
       ].filter(line => line !== "").join("\n");
     }
 
+    function addReportToAnalysis(report, fileName, detail) {
+      const wasEmpty = analysisFiles.length === 0;
+      const entry = {
+        id: nextAnalysisFileId,
+        name: fileName,
+        detail,
+        report
+      };
+      nextAnalysisFileId += 1;
+      analysisFiles.push(entry);
+      renderFileList();
+
+      if (wasEmpty || !activeReport) {
+        renderReport(report);
+      } else {
+        refreshInsightPanel();
+      }
+
+      return entry;
+    }
+
+    function removeAnalysisFile(fileId) {
+      const removedIndex = analysisFiles.findIndex(file => file.id === fileId);
+      if (removedIndex < 0) {
+        return;
+      }
+
+      const wasResultsAnchor = removedIndex === 0;
+      const [removed] = analysisFiles.splice(removedIndex, 1);
+      showToast(`${removed.name} removed from AI Insights`);
+
+      if (!analysisFiles.length) {
+        resetApp();
+        return;
+      }
+
+      renderFileList();
+
+      if (wasResultsAnchor || !activeReport) {
+        renderReport(analysisFiles[0].report);
+      } else {
+        refreshInsightPanel();
+      }
+    }
+
+    function renderFileList() {
+      if (!analysisFiles.length) {
+        els.fileStack.hidden = true;
+        els.fileList.innerHTML = "";
+        setFileMeta("No file selected", ".csv / .pdf");
+        return;
+      }
+
+      const anchor = analysisFiles[0];
+      els.fileStack.hidden = false;
+      setFileMeta(
+        `${analysisFiles.length} file${analysisFiles.length === 1 ? "" : "s"} in AI analysis`,
+        `Results: ${anchor.name}`
+      );
+      els.fileList.innerHTML = analysisFiles.map((file, index) => `
+        <div class="file-row">
+          <div>
+            <strong>${escapeHtml(file.name)}</strong>
+            <span>${escapeHtml(index === 0 ? `Results source · ${file.detail}` : `AI Insights only · ${file.detail}`)}</span>
+          </div>
+          <button class="remove-file-btn" type="button" data-remove-file="${file.id}" aria-label="Remove ${escapeHtml(file.name)}">×</button>
+        </div>
+      `).join("");
+    }
+
+    function refreshInsightPanel() {
+      if (!activeAnalysis) {
+        return;
+      }
+      const comparison = getActiveComparison();
+      els.insightPanel.hidden = false;
+      els.resetApp.disabled = false;
+      renderInsights(activeAnalysis, comparison);
+      renderMeetingBrief(activeAnalysis, comparison);
+      els.summaryText.value = buildAnalysisSetSummary(activeAnalysis, comparison);
+    }
+
     function renderReport(report) {
       activeReport = report;
       activeReport.comparisonIndex = chooseDefaultComparisonIndex(report, report.selectedIndex);
@@ -2594,7 +2827,7 @@
       renderFunnel(analysis);
       renderInsights(analysis, comparison);
       renderMeetingBrief(analysis, comparison);
-      els.summaryText.value = buildExecutiveSummary(analysis, comparison);
+      els.summaryText.value = buildAnalysisSetSummary(analysis, comparison);
       showToast("Analysis complete");
     }
 
@@ -3138,9 +3371,15 @@
     }
 
     function renderInsights(analysis, comparison) {
+      const entries = getAnalysisFileEntries();
       const priorityStep = analysis.largestDrop ? analysis.largestDrop.priorityStep : "the largest dropoff";
       els.healthLabel.textContent = `${analysis.health.label} · Focus first on ${priorityStep}`;
-      const insights = buildImprovementInsights(analysis, comparison).concat(analysis.insights.slice(0, 3));
+      els.healthLabel.textContent = entries.length > 1
+        ? `${entries.length} files analyzed - Results anchored to ${analysisFiles[0].name}`
+        : `${analysis.health.label} - Focus first on ${priorityStep}`;
+      const insights = entries.length > 1
+        ? buildAggregateImprovementInsights(entries, analysis, comparison)
+        : buildImprovementInsights(analysis, comparison).concat(analysis.insights.slice(0, 3));
 
       els.insightsList.innerHTML = insights.map((insight, index) => `
         <li>
@@ -3149,7 +3388,11 @@
         </li>
       `).join("");
 
-      els.recommendations.innerHTML = buildActionRecommendations(analysis, comparison).map(rec => `
+      const recommendations = entries.length > 1
+        ? buildAggregateActionRecommendations(entries, analysis, comparison)
+        : buildActionRecommendations(analysis, comparison);
+
+      els.recommendations.innerHTML = recommendations.map(rec => `
         <div class="recommendation">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M12 3v18M5 10h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -3219,6 +3462,123 @@
       });
 
       return actions.slice(0, 4);
+    }
+
+    function getAnalysisFileEntries() {
+      return analysisFiles.map(file => {
+        const selectedIndex = Number.isFinite(file.report.selectedIndex) ? file.report.selectedIndex : 0;
+        const analysis = file.report.analyses[selectedIndex] || file.report.analyses[0];
+        return analysis ? { file, analysis } : null;
+      }).filter(Boolean);
+    }
+
+    function buildAggregateImprovementInsights(entries, activeAnalysis, comparison) {
+      const worstDrop = entries.reduce((best, entry) => {
+        if (!entry.analysis.largestDrop) {
+          return best;
+        }
+        if (!best || entry.analysis.largestDrop.rate > best.analysis.largestDrop.rate) {
+          return entry;
+        }
+        return best;
+      }, null);
+
+      const lowestConversion = entries.reduce((best, entry) => {
+        if (!best || entry.analysis.overallConversion < best.analysis.overallConversion) {
+          return entry;
+        }
+        return best;
+      }, null);
+
+      const insights = [
+        `${entries.length} files are feeding AI Insights. The Results readout stays anchored to ${analysisFiles[0].name}; added files influence the recommendations here.`
+      ];
+
+      if (worstDrop) {
+        const drop = worstDrop.analysis.largestDrop;
+        insights.push(`Highest-priority leak: ${worstDrop.file.name} has ${formatPercent(drop.rate)} abandonment from ${drop.from} to ${drop.to}.`);
+      }
+
+      if (lowestConversion) {
+        insights.push(`Lowest overall conversion: ${lowestConversion.file.name} converts at ${formatPercent(lowestConversion.analysis.overallConversion)}, making it the best candidate for deeper segmentation.`);
+      }
+
+      if (comparison && comparison.largestMovement) {
+        insights.push(`Active results movement: ${comparison.largestMovement.step} moved ${formatDeltaPoints(comparison.largestMovement.delta)} versus ${comparison.label}.`);
+      }
+
+      entries.slice(0, 3).forEach(entry => {
+        const entryAnalysis = entry.analysis;
+        if (entryAnalysis.narrative && entryAnalysis.narrative.summary) {
+          insights.push(`${entry.file.name}: ${firstSentence(entryAnalysis.narrative.summary)}`);
+        } else if (entryAnalysis.largestDrop) {
+          insights.push(`${entry.file.name}: focus on ${entryAnalysis.largestDrop.priorityStep}, the largest dropoff in that file.`);
+        }
+      });
+
+      return insights.slice(0, 6);
+    }
+
+    function buildAggregateActionRecommendations(entries, activeAnalysis, comparison) {
+      const worstLoss = entries.reduce((best, entry) => {
+        if (!entry.analysis.largestDrop) {
+          return best;
+        }
+        if (!best || entry.analysis.largestDrop.lost > best.analysis.largestDrop.lost) {
+          return entry;
+        }
+        return best;
+      }, null);
+      const actions = [];
+
+      if (worstLoss) {
+        const drop = worstLoss.analysis.largestDrop;
+        actions.push({
+          title: "Start with the largest impact",
+          body: `${worstLoss.file.name} shows the largest modeled loss at ${drop.priorityStep}. Review that step before spreading effort across smaller changes.`
+        });
+      }
+
+      actions.push({
+        title: "Use added files as evidence",
+        body: "Keep the visual Results panel anchored to the first file, then use each added file to confirm whether the same friction appears by segment, date range, or report type."
+      });
+
+      if (comparison && comparison.largestMovement) {
+        actions.push({
+          title: "Weekly meeting anchor",
+          body: `Explain ${comparison.largestMovement.step} first because it has the clearest active-view movement at ${formatDeltaPoints(comparison.largestMovement.delta)}.`
+        });
+      }
+
+      activeAnalysis.recommendations.slice(0, 1).forEach(recommendation => {
+        actions.push({
+          title: "Next diagnostic",
+          body: recommendation
+        });
+      });
+
+      return actions.slice(0, 4);
+    }
+
+    function buildAnalysisSetSummary(analysis, comparison) {
+      const entries = getAnalysisFileEntries();
+      if (entries.length <= 1) {
+        return buildExecutiveSummary(analysis, comparison);
+      }
+
+      return [
+        "Checkout Funnel Analyzer AI Insights Summary",
+        "",
+        `Files analyzed: ${entries.length}`,
+        `Results readout source: ${analysisFiles[0].name}`,
+        "",
+        "Cross-File Findings",
+        ...buildAggregateImprovementInsights(entries, analysis, comparison).map((insight, index) => `${index + 1}. ${insight}`),
+        "",
+        "Recommended Actions",
+        ...buildAggregateActionRecommendations(entries, analysis, comparison).map((action, index) => `${index + 1}. ${action.title}: ${action.body}`)
+      ].join("\n");
     }
 
     function copySummary() {
@@ -3523,6 +3883,8 @@
     function resetApp() {
       activeAnalysis = null;
       activeReport = null;
+      analysisFiles = [];
+      nextAnalysisFileId = 1;
       els.csvInput.value = "";
       els.results.classList.remove("is-visible");
       els.insightPanel.hidden = true;
@@ -3551,7 +3913,7 @@
       els.funnelSubtitle.textContent = "";
       els.healthLabel.textContent = "";
       els.resetApp.disabled = true;
-      setFileMeta("No file selected", ".csv / .pdf");
+      renderFileList();
       setStatus("Ready");
       clearValidation();
       setProcessing(false);
