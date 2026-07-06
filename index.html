@@ -445,8 +445,7 @@
       background: currentColor;
     }
 
-    .empty-state,
-    .results {
+    .empty-state {
       min-height: 410px;
     }
 
@@ -490,6 +489,9 @@
       padding: 20px;
       gap: 14px;
       min-width: 0;
+      min-height: 0;
+      align-content: start;
+      grid-auto-rows: max-content;
     }
 
     .results.is-visible {
